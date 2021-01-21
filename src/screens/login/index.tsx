@@ -1,34 +1,9 @@
+import { useUser } from 'context/user-cotext';
 import React, { FormEvent } from "react";
 
-// interface Base {
-//   id: number
-// }
-//
-// interface Advance extends Base {
-//   name: string
-// }
-//
-// const test = (p: Base) => {
-// }
-//
-// // 鸭子类型(duck typing)：面向接口编程 而不是 面向对象编程
-// const a = {id: 1, name: 'jack'}
-// test(a)
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const LoginScreen = () => {
-  const login = (param: { username: string; password: string }) => {
-    fetch(`${apiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (response) => {
-      if (response.ok) {
-      }
-    });
-  };
+
+  const { login, register, logout, user } = useUser()
 
   // HTMLFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -37,11 +12,14 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+    login({username, password})
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {
+        user && <div>wellcome: {user.name}</div>
+      }
       <div>
         <label htmlFor="username">用户名</label>
         <input type="text" id={"username"} />
@@ -50,7 +28,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">密码</label>
         <input type="password" id={"password"} />
       </div>
-      <button type={"submit"}>注册</button>
+      <button type={"submit"}>login</button>
     </form>
   );
 };
