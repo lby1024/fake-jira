@@ -1,9 +1,9 @@
 import { useUser } from 'context/user-cotext';
 import React, { FormEvent } from "react";
 
-export const LoginScreen = () => {
+export const RegisterScreen = () => {
 
-  const { login, register, logout, user } = useUser()
+  const { register, user } = useUser()
 
   // HTMLFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -12,7 +12,7 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({username, password})
+    register({username, password})
   };
 
   return (
@@ -28,7 +28,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">密码</label>
         <input type="password" id={"password"} />
       </div>
-      <button type={"submit"}>login</button>
+      <button type={"submit"}>register</button>
     </form>
   );
 };

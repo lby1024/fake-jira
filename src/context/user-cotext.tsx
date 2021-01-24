@@ -5,7 +5,7 @@ const UserContext = React.createContext<{
     user: UserInfo | null,
     register: (form: UserForm) => Promise<void>,
     login: (form: UserForm) => Promise<void>,
-    logout: (form: UserForm) => Promise<void>,
+    logout: () => Promise<void>,
 }|undefined>(undefined)
 UserContext.displayName = 'UserContext'
 
@@ -14,7 +14,7 @@ export const UserProvider: FC = (props) => {
 
     const register = (form: UserForm) => User.registry(form).then(res => setUser(res))
     const login = (form: UserForm) => User.login(form).then(setUser) // 一个意思: .then(res => setUser(res))
-    const logout = (form: UserForm) => User.logout().then(() => setUser(null))
+    const logout = () => User.logout().then(() => setUser(null))
 
     return <UserContext.Provider 
         value={{user, register, login, logout}} >
