@@ -3,7 +3,7 @@ import { LoginScreen } from './login'
 import { RegisterScreen } from './register'
 
 const UnauthenticatedApp: FC = () => {
-    const [isRegister, setIsRegister] = useState(false)
+    const [isRegister, setIsRegister] = useState(true)
     return <div>
         {
             isRegister ? <LoginScreen/> : <RegisterScreen/>

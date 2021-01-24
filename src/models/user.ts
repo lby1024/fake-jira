@@ -1,3 +1,5 @@
+import { http } from 'utils/http';
+
 export interface UserInfo {
     id: string;
     name: string;
@@ -56,6 +58,20 @@ class User {
     static handleRes({ user }: { user: UserInfo }) {
         window.localStorage.setItem(User.localStorageKey, user.token || "");
         return user;
+    }
+
+    static getToken() {
+      return window.localStorage.getItem(User.localStorageKey);
+    }
+
+    static async bootstrapUser() {
+      let user = null;
+      const token = User.getToken();
+      if (token) {
+        const data = await http("me", { token });
+        user = data.user;
+      }
+      return user;
     }
 }
 

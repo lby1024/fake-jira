@@ -1,5 +1,6 @@
 import User, { UserForm, UserInfo } from 'models/user'
 import React, { FC, useContext, useState } from 'react'
+import { useMount } from 'utils'
 
 const UserContext = React.createContext<{
     user: UserInfo | null,
@@ -11,6 +12,10 @@ UserContext.displayName = 'UserContext'
 
 export const UserProvider: FC = (props) => {
     const [user, setUser] = useState<UserInfo|null>(null)
+
+    useMount(() => {
+        User.bootstrapUser().then(setUser)
+    })
 
     const register = (form: UserForm) => User.registry(form).then(res => setUser(res))
     const login = (form: UserForm) => User.login(form).then(setUser) // 一个意思: .then(res => setUser(res))
