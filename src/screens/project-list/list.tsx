@@ -1,3 +1,5 @@
+import { Table } from 'antd'
+import { ColumnsType } from 'antd/lib/table'
 import { UserInfo } from 'models/user'
 import React, { FC } from 'react'
 
@@ -15,10 +17,23 @@ interface ListProps {
 }
 
 const List: FC<ListProps> = ({list, users}) => {
-    return <div>
+    const columns: ColumnsType<Project> = [
         {
-            list.map(project => <div key={project.id}>{project.name}: {users.find(user => user.id === project.id)?.name || '未知'}</div>)
+            title: '项目名称',
+            dataIndex: 'name'
+        },{
+            title: '负责人',
+            render: (value, project) => {
+                return <span>{users.find(user => user.id === project.personId)?.name || '未知'}</span>
+            }
         }
+    ]
+
+    return <div>
+        <Table 
+            pagination={false} 
+            dataSource={list}
+            columns={columns} />
     </div>
 }
 

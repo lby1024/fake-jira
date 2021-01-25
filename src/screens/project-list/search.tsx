@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC } from 'react'
 import { UserInfo } from 'models/user';
+import { Input, Select } from 'antd';
 
 interface SearchPanelProps {
     users: UserInfo[]
@@ -18,22 +19,22 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
             name: e.target.value
         })
     }
-    const onChangeId = (e: ChangeEvent<HTMLSelectElement>) => {
+    const onChangeId = (value: string) => {
         setParam({
             ...param,
-            personId: e.target.value
+            personId: value
         })
     }
 
     return (
         <form>
-            <input type="text" value={param.name} onChange={onChangeName} />
-            <select value={param.personId} onChange={onChangeId} >
-                <option value="">负责人</option>
+            <Input type="text" value={param.name} onChange={onChangeName} />
+            <Select value={param.personId} onChange={onChangeId} >
+                <Select.Option value="">负责人</Select.Option>
                 {
-                    users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
+                    users.map(user => <Select.Option key={user.id} value={user.id}>{user.name}</Select.Option>)
                 }
-            </select>
+            </Select>
         </form>
     )
 }
