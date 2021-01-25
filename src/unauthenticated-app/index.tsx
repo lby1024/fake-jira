@@ -12,6 +12,7 @@ const UnauthenticatedApp: FC = () => {
     return (
         <Container>
             <Header />
+            <Background />
             <CardCss>
                 <Title>{isRegister ? "请登录" : "请注册"}</Title>
                 { isRegister ? <LoginScreen/> : <RegisterScreen/> }
@@ -20,7 +21,6 @@ const UnauthenticatedApp: FC = () => {
                     { isRegister ? '去注册' : '直接登陆' }
                 </div>
             </CardCss>
-            <Background />
         </Container>
     )
 }
