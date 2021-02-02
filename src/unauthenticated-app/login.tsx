@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import { Form, Input } from 'antd';
 import { useUser } from 'context/user-cotext';
 import { UserForm } from 'models/user';

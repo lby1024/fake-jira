@@ -3,8 +3,7 @@ import { cleanObj, useDebounce, useMount } from 'utils'
 import { useHttp } from 'utils/http'
 import List from './list'
 import SearchPanel from './search'
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import styled from '@emotion/styled';
 
 const PageProjectList: FC = () => {
     const [users, setUsers] = useState([])
@@ -25,10 +24,15 @@ const PageProjectList: FC = () => {
         req('users').then(setUsers)
     })
 
-    return <div>
+    return <Container>
+        <h1>项目列表</h1>
         <SearchPanel users={users} param={param} setParam={setParam} />
         <List users={users} list={list} />
-    </div>
+    </Container>
 }
 
 export default PageProjectList
+
+const Container = styled.div`
+padding: 3.2rem;
+`
