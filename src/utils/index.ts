@@ -37,5 +37,6 @@ export const useDebounce = <V>(value: V, delay=200) => {
 export const useMount = (cb: () => void) => {
     useEffect(() => {
         cb()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 }
