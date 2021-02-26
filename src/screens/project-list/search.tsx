@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FC } from 'react'
-import { UserInfo } from 'models/user';
+import { IUserInfo } from 'models/user';
 import { Form, Input, Select } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 
 interface SearchPanelProps {
-    users: UserInfo[]
+    users: IUserInfo[]
     param: {
         name: string,
         personId: string,

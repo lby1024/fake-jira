@@ -1,33 +1,30 @@
-import React, { FC, useEffect, useState } from 'react'
-import { cleanObj, useDebounce, useMount } from 'utils'
-import { useHttp } from 'utils/http'
+import React, { FC, useState } from 'react'
+import { useDebounce } from 'utils'
 import List from './list'
 import SearchPanel from './search'
 import styled from '@emotion/styled';
+import useProjects from 'utils/use-projects'
+import useUsers from 'utils/use-users'
+import { Typography } from 'antd';
 
 const PageProjectList: FC = () => {
-    const [users, setUsers] = useState([])
     const [param, setParam] = useState({
         name: "",
         personId: "",
     })
     const debouncedParam = useDebounce(param, 200)
-    const [list, setList] = useState([])
-    const req = useHttp()
-
-    useEffect(() => {
-        const data = cleanObj(debouncedParam)
-        req('projects', { data }).then(setList)
-    }, [debouncedParam])
-
-    useMount(() => {
-        req('users').then(setUsers)
-    })
+    const projects = useProjects(debouncedParam)
+    const users = useUsers()
 
     return <Container>
         <h1>项目列表</h1>
-        <SearchPanel users={users} param={param} setParam={setParam} />
-        <List users={users} list={list} />
+        <SearchPanel users={users.data || []} param={param} setParam={setParam} />
+        {projects.error && <Typography.Text type='danger' >{projects.error.message}</Typography.Text>}
+        <List 
+            users={users.data || []} 
+            list={projects.data || []} 
+            loading={projects.isLoading}
+        />
     </Container>
 }
 

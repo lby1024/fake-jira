@@ -1,16 +1,22 @@
-import React from "react";
+import React, { FC } from "react";
 import { Form, Input } from 'antd';
 import { useUser } from 'context/user-cotext';
 import { UserForm } from 'models/user';
 import FormItem from 'antd/lib/form/FormItem';
 import { LongButton } from 'unauthenticated-app';
 
-export const LoginScreen = () => {
+interface ILoginScreen {
+  onError: (err: Error) => void
+}
 
-  const { login, user } = useUser()
+export const LoginScreen:FC<ILoginScreen> = (props) => {
+
+  const { login } = useUser()
 
   const handleSubmit = (params: UserForm) => {
-    login(params)
+    login(params).catch(err => {
+      props.onError(err)
+    })
   };
 
   return (

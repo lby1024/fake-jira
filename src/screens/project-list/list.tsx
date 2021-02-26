@@ -1,10 +1,10 @@
 import { Table } from 'antd'
-import { ColumnsType } from 'antd/lib/table'
+import { ColumnsType, TableProps } from 'antd/lib/table'
 import dayjs from 'dayjs'
-import { UserInfo } from 'models/user'
+import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 
-interface Project {
+export interface Project {
     id: string;
     name: string;
     personId: string;
@@ -13,12 +13,12 @@ interface Project {
     created: string;
 }
 
-interface ListProps {
+interface ListProps extends TableProps<Project> {
     list: Project[];
-    users: UserInfo[]
+    users: IUserInfo[]
 }
 
-const List: FC<ListProps> = ({list, users}) => {
+const List: FC<ListProps> = ({list, users, ...props}) => {
     const columns: ColumnsType<Project> = [
         {
             title: '项目名称',
@@ -54,6 +54,7 @@ const List: FC<ListProps> = ({list, users}) => {
             pagination={false} 
             dataSource={dataSource}
             columns={columns} 
+            {...props}
         />
     </div>
 }

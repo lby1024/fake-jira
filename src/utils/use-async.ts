@@ -12,7 +12,7 @@ const defaultInitData: State<null> = {
     state: 'idle',
 }
 
-function useAsync<D>(initData: State<D>) {
+function useAsync<D>(initData?: State<D>) {
     const [state, setState] = useState({
         ...defaultInitData,
         ...initData

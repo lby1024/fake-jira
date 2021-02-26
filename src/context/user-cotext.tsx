@@ -1,9 +1,9 @@
-import User, { UserForm, UserInfo } from 'models/user'
+import User, { UserForm, IUserInfo } from 'models/user'
 import React, { FC, useContext, useState } from 'react'
 import { useMount } from 'utils'
 
 const UserContext = React.createContext<{
-    user: UserInfo | null,
+    user: IUserInfo | null,
     register: (form: UserForm) => Promise<void>,
     login: (form: UserForm) => Promise<void>,
     logout: () => Promise<void>,
@@ -11,7 +11,7 @@ const UserContext = React.createContext<{
 UserContext.displayName = 'UserContext'
 
 export const UserProvider: FC = (props) => {
-    const [user, setUser] = useState<UserInfo|null>(null)
+    const [user, setUser] = useState<IUserInfo|null>(null)
 
     useMount(() => {
         User.bootstrapUser().then(setUser)

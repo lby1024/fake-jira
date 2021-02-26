@@ -1,6 +1,6 @@
 import { http } from 'utils/http';
 
-export interface UserInfo {
+export interface IUserInfo {
     id: string;
     name: string;
     email: string;
@@ -30,7 +30,7 @@ class User {
             if (response.ok) {
               return User.handleRes(await response.json());
             } else {
-              return Promise.reject(data);
+              return Promise.reject(await response.json());
             }
           });
     }
@@ -46,7 +46,7 @@ class User {
             if (response.ok) {
               return User.handleRes(await response.json());
             } else {
-              return Promise.reject(data);
+              return Promise.reject(await response.json());
             }
           });
     }
@@ -55,7 +55,7 @@ class User {
         window.localStorage.removeItem(User.localStorageKey);
     }
 
-    static handleRes({ user }: { user: UserInfo }) {
+    static handleRes({ user }: { user: IUserInfo }) {
         window.localStorage.setItem(User.localStorageKey, user.token || "");
         return user;
     }
