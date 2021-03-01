@@ -4,6 +4,7 @@ import { useUser } from 'context/user-cotext';
 import { UserForm } from 'models/user';
 import FormItem from 'antd/lib/form/FormItem';
 import { LongButton } from 'unauthenticated-app';
+import useAsync from "utils/use-async";
 
 interface ILoginScreen {
   onError: (err: Error) => void
@@ -12,9 +13,11 @@ interface ILoginScreen {
 export const LoginScreen:FC<ILoginScreen> = (props) => {
 
   const { login } = useUser()
+  const { run, isLoading } = useAsync()
 
   const handleSubmit = (params: UserForm) => {
-    login(params).catch(err => {
+    run(login(params)).catch(err => {
+      console.log(err)
       props.onError(err)
     })
   };
@@ -31,7 +34,7 @@ export const LoginScreen:FC<ILoginScreen> = (props) => {
       </FormItem>
 
       <FormItem>
-        <LongButton htmlType='submit' type='primary' >登陆</LongButton>
+        <LongButton loading={isLoading} htmlType='submit' type='primary' >登陆</LongButton>
       </FormItem>
 
     </Form>

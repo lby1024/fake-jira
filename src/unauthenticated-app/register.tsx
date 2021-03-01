@@ -9,11 +9,22 @@ interface IRegisterScreen {
     onError: (err: Error) => void
 }
 
+interface IForm {
+  username: string;
+  password: string;
+  cpassword: string;
+}
+
 export const RegisterScreen: FC<IRegisterScreen> = (props) => {
 
   const { register } = useUser()
 
-  const handleSubmit = (params: UserForm) => {
+  const handleSubmit = ({ cpassword, ...params }: IForm) => {
+    if(cpassword !== params.password) {
+      const error = new Error('请确保两次密码相同')
+      props.onError(error)
+      return
+    }
     register(params).catch(err => props.onError(err))
   };
 
@@ -25,7 +36,11 @@ export const RegisterScreen: FC<IRegisterScreen> = (props) => {
       </FormItem>
 
       <FormItem name='password' rules={[{required: true, message: '请输入密码'}]} >
-        <Input placeholder='密码' type='text' />
+        <Input.Password placeholder='密码' type='text' />
+      </FormItem>
+
+      <FormItem name='cpassword' rules={[{required: true, message: '请再次输入密码'}]} >
+        <Input.Password placeholder='确认密码' type='text' />
       </FormItem>
 
       <FormItem>

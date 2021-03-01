@@ -45,7 +45,7 @@ function useAsync<D>(initData?: State<D>) {
             return data
         } catch (error) {
             setErr(error)
-            return error
+            throw error
         }
     }
 
