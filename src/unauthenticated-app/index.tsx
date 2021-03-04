@@ -6,8 +6,10 @@ import styled from '@emotion/styled'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
+import { useTitle } from 'utils'
 
 const UnauthenticatedApp: FC = () => {
+    useTitle('登录注册')
     const [isRegister, setIsRegister] = useState(true)
     const [err, setErr] = useState<Error | null>(null)
     return (

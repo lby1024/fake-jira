@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * 是否为 null, undefined, '', 等
@@ -38,5 +38,21 @@ export const useMount = (cb: () => void) => {
     useEffect(() => {
         cb()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+}
+/**
+ * 设置页面标题
+ */
+export const useTitle = (title: string) => {
+    const defaultTitle = useRef(document.title)
+
+    useEffect(() => {
+        document.title = title
+    }, [title])
+
+    useEffect(() => {
+        return () => {
+            document.title = defaultTitle.current
+        }
     }, [])
 }

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { useDebounce } from 'utils'
+import { useDebounce, useTitle } from 'utils'
 import List from './list'
 import SearchPanel from './search'
 import styled from '@emotion/styled';
@@ -8,6 +8,7 @@ import useUsers from 'utils/use-users'
 import { Typography } from 'antd';
 
 const PageProjectList: FC = () => {
+    useTitle('项目列表')
     const [param, setParam] = useState({
         name: "",
         personId: "",
