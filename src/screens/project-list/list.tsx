@@ -3,6 +3,7 @@ import { ColumnsType, TableProps } from 'antd/lib/table'
 import dayjs from 'dayjs'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 export interface Project {
     id: string;
@@ -24,6 +25,9 @@ const List: FC<ListProps> = ({list, users, ...props}) => {
             title: '项目名称',
             dataIndex: 'name',
             key: 'name',
+            render(value, project) {
+                return <Link to={String(project.id)} >{value}</Link>
+            }
         },{
             title: '部门',
             dataIndex: 'organization',
