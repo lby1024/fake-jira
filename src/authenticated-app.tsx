@@ -11,7 +11,7 @@ const AuthenticatedApp: FC = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/projects' element={<PageProjectList/>} />
-                <Route path='/projects/:projectId/*' element={<PProject/>} />
+                <Route path='/projects/:id/*' element={<PProject/>} />
                 <Navigate to='/projects' />
             </Routes>
         </BrowserRouter>
