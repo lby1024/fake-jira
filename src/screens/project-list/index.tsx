@@ -17,7 +17,7 @@ const PageProjectList: FC = () => {
 
     return <Container>
         <h1>项目列表</h1>
-        <SearchPanel users={users.data || []} param={param} setParam={setParam} />
+        <SearchPanel users={users.data || []} param={param} setParam={setParams} />
         {projects.error && <Typography.Text type='danger' >{projects.error.message}</Typography.Text>}
         <List 
             users={users.data || []} 
