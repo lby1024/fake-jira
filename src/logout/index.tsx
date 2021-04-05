@@ -8,7 +8,7 @@ import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 import { useTitle } from 'utils'
 
-const UnauthenticatedApp: FC = () => {
+const XLogout: FC = () => {
     useTitle('登录注册')
     const [isRegister, setIsRegister] = useState(true)
     const [err, setErr] = useState<Error | null>(null)
@@ -35,7 +35,7 @@ const UnauthenticatedApp: FC = () => {
     )
 }
 
-export default UnauthenticatedApp
+export default XLogout
 
 const Container = styled.div`
     display: flex;

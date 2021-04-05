@@ -4,7 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import PProject from 'screens/project'
 import PageProjectList from 'screens/project-list'
 
-const AuthenticatedApp: FC = () => {
+const XRouter: FC = () => {
 
     return <div>
         <XHeader />
@@ -19,4 +19,4 @@ const AuthenticatedApp: FC = () => {
     </div>
 }
 
-export default AuthenticatedApp
+export default XRouter

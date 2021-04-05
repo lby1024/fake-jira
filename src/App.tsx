@@ -1,7 +1,7 @@
 import { useUser } from 'context/user-cotext';
 import React from 'react';
-import UnauthenticatedApp from 'unauthenticated-app';
-import AuthenticatedApp from 'authenticated-app';
+import XLogout from 'logout';
+import XRouter from 'router';
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      { user ? <AuthenticatedApp /> : <UnauthenticatedApp /> }
+      { user ? <XRouter /> : <XLogout /> }
     </div>
   );
 }
