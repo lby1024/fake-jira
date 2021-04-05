@@ -19,7 +19,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // "noUnusedLocals": true, // 若有未使用的局部变量则抛错。
+    // "noUnusedParameters": true, // 若有未使用的参数则抛错。
   },
   "include": [
     "src"

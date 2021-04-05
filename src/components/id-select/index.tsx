@@ -24,3 +24,5 @@ const XIdSelect: FC<IXIdSelect> = ({value, defaultName, options, onChange, ...re
         }
     </Select>
 }
+
+export default XIdSelect

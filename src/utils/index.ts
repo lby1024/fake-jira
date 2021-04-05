@@ -9,7 +9,7 @@ export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
  */
 export const cleanObj = (obj: object) => {
     const res = {...obj}
-    Object.keys(res).map(key => {
+    Object.keys(res).forEach(key => {
         // @ts-ignore
         const v = res[key]
         if(isFalsy(v)) {
