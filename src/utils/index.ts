@@ -56,3 +56,10 @@ export const useTitle = (title: string) => {
         }
     }, [])
 }
+/**
+ * 转成数字
+ */
+export const toNumber = (value: unknown) => {
+    const num = Number(value)
+    return isNaN(num) ? 0 : num
+}
