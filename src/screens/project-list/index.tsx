@@ -7,18 +7,21 @@ import useProjects from 'utils/use-projects'
 import useUsers from 'utils/use-users'
 import { Typography } from 'antd';
 import useUrlParams from 'utils/use-url-params';
+import useProjectsParam from './use-projects-param';
 
 const PageProjectList: FC = () => {
     useTitle('项目列表')
-    const [param, setParams] = useUrlParams(['name', 'personId'])
-    const debouncedParam = useDebounce(param, 200)
-    const projects = useProjects(debouncedParam)
+    const {param, setParams} = useProjectsParam()
+    const projects = useProjects(useDebounce(param))
     const users = useUsers()
 
     return <Container>
         <h1>项目列表</h1>
         <SearchPanel users={users.data || []} param={param} setParam={setParams} />
-        {projects.error && <Typography.Text type='danger' >{projects.error.message}</Typography.Text>}
+        {
+            projects.error && 
+            <Typography.Text type='danger' >{projects.error.message}</Typography.Text>
+        }
         <List 
             users={users.data || []} 
             list={projects.data || []} 

@@ -1,7 +1,7 @@
 import { http } from 'utils/http';
 
 export interface IUserInfo {
-    id: string;
+    id: number;
     name: string;
     email: string;
     title: string;

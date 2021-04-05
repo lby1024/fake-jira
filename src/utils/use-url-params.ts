@@ -13,7 +13,7 @@ function useUrlParams<K extends string>(keys: K[]) {
         }), {} as {[x in K]: string})
     }, [searchParams])
 
-    const setParams = (obj: Partial<{[x in K]: string}>) => {
+    const setParams = (obj: Partial<{[x in K]: any}>) => {
         let o = cleanObj({
             ...Object.fromEntries(searchParams),
             ...obj,

@@ -7,7 +7,7 @@ interface SearchPanelProps {
     users: IUserInfo[]
     param: {
         name: string,
-        personId: string,
+        personId: number | undefined,
     }
     setParam: (param: SearchPanelProps['param']) => void
 }
@@ -23,7 +23,7 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
     const onChangeId = (value: string) => {
         setParam({
             ...param,
-            personId: value
+            personId: Number(value)
         })
     }
 
@@ -40,9 +40,9 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
             </FormItem>
 
             <FormItem>
-                <Select value={param.personId} onChange={onChangeId} >
-                    <Select.Option value="">负责人</Select.Option>
-                    { users.map(user => <Select.Option key={user.id} value={user.id}>{user.name}</Select.Option>) }
+                <Select value={param.personId ? String(param.personId) : ''} onChange={onChangeId} >
+                    <Select.Option value={''}>负责人</Select.Option>
+                    { users.map(user => <Select.Option key={user.id} value={String(user.id)}>{user.name}</Select.Option>) }
                 </Select>
             </FormItem>
 
