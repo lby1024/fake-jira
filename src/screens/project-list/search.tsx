@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC } from 'react'
 import { IUserInfo } from 'models/user';
 import { Form, Input, Select } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
+import XIdSelect from 'components/id-select';
 
 interface SearchPanelProps {
     users: IUserInfo[]
@@ -20,10 +21,11 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
             name: e.target.value
         })
     }
-    const onChangeId = (value: string) => {
+    
+    const onChangeId = (value: number) => {
         setParam({
             ...param,
-            personId: Number(value)
+            personId: value
         })
     }
 
@@ -40,10 +42,12 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
             </FormItem>
 
             <FormItem>
-                <Select value={param.personId ? String(param.personId) : ''} onChange={onChangeId} >
-                    <Select.Option value={''}>负责人</Select.Option>
-                    { users.map(user => <Select.Option key={user.id} value={String(user.id)}>{user.name}</Select.Option>) }
-                </Select>
+                <XIdSelect 
+                    options={users}
+                    value={param.personId}
+                    defaultName='负责人'
+                    onChange={onChangeId}
+                />
             </FormItem>
 
         </Form >
