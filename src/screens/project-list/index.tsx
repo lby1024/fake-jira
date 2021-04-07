@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import useProjects from 'utils/use-projects'
 import useUsers from 'utils/use-users'
 import { Typography } from 'antd';
-import useUrlParams from 'utils/use-url-params';
 import useProjectsParam from './use-projects-param';
 
 const PageProjectList: FC = () => {

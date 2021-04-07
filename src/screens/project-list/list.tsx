@@ -1,5 +1,6 @@
 import { Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/lib/table'
+import XCollection from 'components/collection'
 import dayjs from 'dayjs'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
@@ -20,7 +21,17 @@ interface ListProps extends TableProps<Project> {
 }
 
 const List: FC<ListProps> = ({list, users, ...props}) => {
+
+    const onCheckedChange = (id: number) => (pin: boolean) => {console.log(id, pin)}
     const columns: ColumnsType<Project> = [
+        {
+            title: <XCollection checked={true} />,
+            dataIndex: 'pin',
+            key: 'pin',
+            render(value, project) {
+               return <XCollection checked={false} onCheckedChange={onCheckedChange(project.id)} />
+            }
+        },
         {
             title: '项目名称',
             dataIndex: 'name',
@@ -41,8 +52,8 @@ const List: FC<ListProps> = ({list, users, ...props}) => {
             }
         },{
             title: '创建时间',
-            dataIndex: 'time',
-            key: 'time',
+            dataIndex: 'created',
+            key: 'created',
             render(v, project) {
                 return project.created ? dayjs(project.created).format('YYYY-MM-DD') : '无'
             }
