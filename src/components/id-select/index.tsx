@@ -20,7 +20,7 @@ const XIdSelect: FC<IXIdSelect> = ({value, defaultName, options, onChange, ...re
             defaultName &&
             <Select.Option value={0} >{defaultName}</Select.Option>
         }{
-            options.map(item => <Select.Option value={item.id} >{item.name}</Select.Option>)
+            options.map(item => <Select.Option key={item.id} value={item.id} >{item.name}</Select.Option>)
         }
     </Select>
 }

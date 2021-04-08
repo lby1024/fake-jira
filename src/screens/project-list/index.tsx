@@ -25,6 +25,7 @@ const PageProjectList: FC = () => {
             users={users.data || []} 
             list={projects.data || []} 
             loading={projects.isLoading}
+            refresh={projects.retry}
         />
     </Container>
 }

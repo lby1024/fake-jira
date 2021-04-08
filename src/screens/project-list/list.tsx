@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useEditProject } from 'utils/use-projects'
 
 export interface Project {
     id: number;
@@ -17,19 +18,23 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
     list: Project[];
-    users: IUserInfo[]
+    users: IUserInfo[];
+    refresh: () => void;
 }
 
-const List: FC<ListProps> = ({list, users, ...props}) => {
+const List: FC<ListProps> = ({list, users, refresh, ...props}) => {
 
-    const onCheckedChange = (id: number) => (pin: boolean) => {console.log(id, pin)}
+    const project = useEditProject()
+    const onCheckedChange = (id: number) => (pin: boolean) => {
+        project.update({id, pin}).then(() => refresh())
+    }
     const columns: ColumnsType<Project> = [
         {
             title: <XCollection checked={true} />,
             dataIndex: 'pin',
             key: 'pin',
             render(value, project) {
-               return <XCollection checked={false} onCheckedChange={onCheckedChange(project.id)} />
+               return <XCollection checked={project.pin} onCheckedChange={onCheckedChange(project.id)} />
             }
         },
         {
