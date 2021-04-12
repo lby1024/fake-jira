@@ -4,17 +4,17 @@ import { toNumber } from "utils";
 
 type selectProps = React.ComponentProps<typeof Select>
 
-interface IXIdSelect extends Omit<selectProps, 'value' | 'options' | 'onChange'> {
-    value: number | string | null | undefined
+interface IXUserSelect extends Omit<selectProps, 'value' | 'options' | 'onChange'> {
+    value?: number | string | null | undefined
     defaultName: string
     options: {name: string, id: number}[]
-    onChange: (v: number) => void
+    onChange?: (v: number) => void
 }
 
-const XIdSelect: FC<IXIdSelect> = ({value, defaultName, options, onChange, ...restProps}) => {
+const XUserSelect: FC<IXUserSelect> = ({value, defaultName, options, onChange, ...restProps}) => {
     return <Select 
         {...restProps}
-        onChange={v => onChange(toNumber(v))}
+        onChange={v => onChange?.(toNumber(v))}
         value={ options.length ? toNumber(value) : 0} >
         {
             defaultName &&
@@ -25,4 +25,4 @@ const XIdSelect: FC<IXIdSelect> = ({value, defaultName, options, onChange, ...re
     </Select>
 }
 
-export default XIdSelect
+export default XUserSelect

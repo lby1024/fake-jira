@@ -5,8 +5,9 @@ import SearchPanel from './search'
 import styled from '@emotion/styled';
 import useProjects from 'utils/use-projects'
 import useUsers from 'utils/use-users'
-import { Typography } from 'antd';
+import { Button, Row, Typography } from 'antd';
 import useProjectsParam from './use-projects-param';
+import AlertModel from 'models/alert';
 
 const PageProjectList: FC = () => {
     useTitle('项目列表')
@@ -14,9 +15,22 @@ const PageProjectList: FC = () => {
     const projects = useProjects(useDebounce(param))
     const users = useUsers()
 
+    const addProject = () => {
+        AlertModel.projectForm({
+            type: 'add'
+        })
+    }
+
     return <Container>
-        <h1>项目列表</h1>
-        <SearchPanel users={users.data || []} param={param} setParam={setParams} />
+        <Row justify='space-between' align='middle' >
+            <h1>项目列表</h1>
+            <Button type='link' onClick={addProject} >创建项目</Button>
+        </Row>
+        <SearchPanel 
+            users={users.data || []} 
+            param={param} 
+            setParam={setParams} 
+        />
         {
             projects.error && 
             <Typography.Text type='danger' >{projects.error.message}</Typography.Text>

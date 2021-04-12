@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC } from 'react'
 import { IUserInfo } from 'models/user';
 import { Form, Input, Select } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
-import XIdSelect from 'components/id-select';
+import XUserSelect from 'components/id-select';
 
 interface SearchPanelProps {
     users: IUserInfo[]
@@ -42,7 +42,7 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
             </FormItem>
 
             <FormItem>
-                <XIdSelect 
+                <XUserSelect
                     options={users}
                     value={param.personId}
                     defaultName='负责人'
