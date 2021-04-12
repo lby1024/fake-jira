@@ -27,7 +27,6 @@ const PageProjectList: FC = () => {
             <Button type='link' onClick={addProject} >创建项目</Button>
         </Row>
         <SearchPanel 
-            users={users.data || []} 
             param={param} 
             setParam={setParams} 
         />

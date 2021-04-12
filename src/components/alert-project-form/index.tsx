@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Drawer, Form, Input } from "antd";
+import { Drawer } from "antd";
 import AlertModel from "models/alert";
 import React, { FC, useState } from "react";
 import XProjectForm from "./project-form";

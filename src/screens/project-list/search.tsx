@@ -5,7 +5,6 @@ import FormItem from 'antd/lib/form/FormItem';
 import XUserSelect from 'components/id-select';
 
 interface SearchPanelProps {
-    users: IUserInfo[]
     param: {
         name: string,
         personId: number | undefined,
@@ -13,7 +12,7 @@ interface SearchPanelProps {
     setParam: (param: SearchPanelProps['param']) => void
 }
 
-const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
+const SearchPanel:FC<SearchPanelProps> = ({param, setParam}) => {
 
     const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
         setParam({
@@ -43,7 +42,6 @@ const SearchPanel:FC<SearchPanelProps> = ({users, param, setParam}) => {
 
             <FormItem>
                 <XUserSelect
-                    options={users}
                     value={param.personId}
                     defaultName='负责人'
                     onChange={onChangeId}

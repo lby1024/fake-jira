@@ -25,7 +25,7 @@ const XProjectForm: FC = () => {
             <Form.Item 
                 name="personId"
                 label='负责人'>
-                {/* <XUserSelect  /> */}
+                <XUserSelect defaultName='负责人' />
             </Form.Item>
         </Form>
     </CSS>

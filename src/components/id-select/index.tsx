@@ -1,17 +1,19 @@
 import { Select } from "antd";
 import React, { FC } from "react";
 import { toNumber } from "utils";
+import useUsers from "utils/use-users";
 
 type selectProps = React.ComponentProps<typeof Select>
 
 interface IXUserSelect extends Omit<selectProps, 'value' | 'options' | 'onChange'> {
     value?: number | string | null | undefined
     defaultName: string
-    options: {name: string, id: number}[]
     onChange?: (v: number) => void
 }
 
-const XUserSelect: FC<IXUserSelect> = ({value, defaultName, options, onChange, ...restProps}) => {
+const XUserSelect: FC<IXUserSelect> = ({value, defaultName, onChange, ...restProps}) => {
+    const users = useUsers()
+    const options = users.data || []
     return <Select 
         {...restProps}
         onChange={v => onChange?.(toNumber(v))}
