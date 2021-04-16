@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import { Form, Input } from "antd"
-import XUserSelect from "components/id-select"
+import XUserSelect from "components/user-select"
 import React, { FC } from "react"
 
 

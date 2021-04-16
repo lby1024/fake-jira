@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FC } from 'react'
-import { IUserInfo } from 'models/user';
-import { Form, Input, Select } from 'antd';
+import { Form, Input } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
-import XUserSelect from 'components/id-select';
+import XUserSelect from 'components/user-select';
 
 interface SearchPanelProps {
     param: {
