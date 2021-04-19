@@ -7,7 +7,10 @@ export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
 /**
  * {a: 0, b: null} --> {a: 0}
  */
-export const cleanObj = (obj: object) => {
+export const cleanObj = (obj?: object) => {
+    if(!obj) {
+        return {}
+    }
     const res = {...obj}
     Object.keys(res).forEach(key => {
         // @ts-ignore

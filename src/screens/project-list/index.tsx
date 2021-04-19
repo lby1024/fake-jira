@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useDebounce, useTitle } from 'utils'
-import List from './list'
+import XList from './list'
 import SearchPanel from './search'
 import styled from '@emotion/styled';
 import useProjects from 'utils/use-projects'
@@ -8,6 +8,7 @@ import useUsers from 'utils/use-users'
 import { Button, Row, Typography } from 'antd';
 import useProjectsParam from './use-projects-param';
 import AlertModel from 'models/alert';
+import XErrorBox from 'components/err-box';
 
 const PageProjectList: FC = () => {
     useTitle('项目列表')
@@ -32,13 +33,12 @@ const PageProjectList: FC = () => {
         />
         {
             projects.error && 
-            <Typography.Text type='danger' >{projects.error.message}</Typography.Text>
+            <XErrorBox error={projects.error} />
         }
-        <List 
+        <XList 
             users={users.data || []} 
             list={projects.data || []} 
             loading={projects.isLoading}
-            refresh={projects.retry}
         />
     </Container>
 }

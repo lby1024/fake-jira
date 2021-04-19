@@ -7,6 +7,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 interface Config extends RequestInit {
     token?: string
     data?: object
+    method?: 'GET'|'POST'|'PUT'|'PATCH'
 }
 
 export const http = async (api: string, cfg: Config = {} ) => {

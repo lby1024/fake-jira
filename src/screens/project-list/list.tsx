@@ -19,14 +19,13 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
     list: Project[];
     users: IUserInfo[];
-    refresh: () => void;
 }
 
-const List: FC<ListProps> = ({list, users, refresh, ...props}) => {
+const XList: FC<ListProps> = ({list, users, ...props}) => {
 
     const project = useEditProject()
     const onCheckedChange = (id: number) => (pin: boolean) => {
-        project.update({id, pin}).then(() => refresh())
+        project.mutate({id, pin})
     }
     const columns: ColumnsType<Project> = [
         {
@@ -79,4 +78,4 @@ const List: FC<ListProps> = ({list, users, refresh, ...props}) => {
     </div>
 }
 
-export default List
+export default XList
