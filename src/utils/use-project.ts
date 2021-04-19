@@ -7,8 +7,10 @@ import { useHttp } from "./http"
  */
 export function useProjects(params?: Partial<Project>) {
     const client = useHttp();
-    return useQuery<Project[], Error>( ['projects', cleanObj(params)], () => 
-        client('projects', {data: params})
+    const data = cleanObj(params)
+
+    return useQuery<Project[], Error>( ['projects', data], () => 
+        client('projects', {data})
     )
 }
 /**
@@ -41,7 +43,7 @@ export function useProject(id?: number) {
 /**
  * 添加project
  */
-export function addProject() {
+export function useAddProject() {
     const client = useHttp()
     const queryClient = useQueryClient()
 
