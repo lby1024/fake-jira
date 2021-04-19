@@ -3,7 +3,7 @@ import { useDebounce, useTitle } from 'utils'
 import XList from './list'
 import SearchPanel from './search'
 import styled from '@emotion/styled';
-import useProjects from 'utils/use-projects'
+import {useProjects} from 'utils/use-project'
 import useUsers from 'utils/use-users'
 import { Button, Row, Typography } from 'antd';
 import useProjectsParam from './use-projects-param';

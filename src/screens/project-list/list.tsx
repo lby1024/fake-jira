@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { useEditProject } from 'utils/use-projects'
+import { useEditProject } from 'utils/use-project'
 
 export interface Project {
     id: number;

@@ -3,7 +3,7 @@ interface Isuccessfail {
     fail?: () => void
 }
 
-interface IProjectForm extends Isuccessfail {
+export interface IProjectForm extends Isuccessfail {
     type: 'add' | 'update',
     id?: number
 }
