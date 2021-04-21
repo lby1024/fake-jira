@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { useEditProject } from 'utils/use-project'
+import { useEditProject, useProjectsQuery } from 'utils/use-project'
 
 export interface Project {
     id: number;
@@ -23,7 +23,9 @@ interface ListProps extends TableProps<Project> {
 
 const XList: FC<ListProps> = ({list, users, ...props}) => {
 
-    const project = useEditProject()
+    const project = useEditProject(
+        useProjectsQuery()
+    )
     const onCheckedChange = (id: number) => (pin: boolean) => {
         project.mutate({id, pin})
     }
