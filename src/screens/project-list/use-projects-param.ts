@@ -1,4 +1,5 @@
 import { useMemo } from "react"
+import { cleanObj } from "utils"
 import useUrlParams from "utils/use-url-params"
 
 export default function useProjectsParam() {

@@ -21,7 +21,8 @@ export const http = async (api: string, cfg: Config = {} ) => {
     }
 
     if(config.method.toUpperCase() === 'GET') {
-        api += `?${qs.stringify(cfg.data)}`
+        const params = qs.stringify(cfg.data)
+        if(params) api += `?${params}`
     }else {
         config.body = JSON.stringify(cfg.data || {})
     }

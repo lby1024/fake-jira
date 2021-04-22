@@ -2,10 +2,10 @@ import { IUserInfo } from "models/user"
 import { useQuery } from "react-query"
 import { useHttp } from "./http"
 
-function useUsers(params?: Partial<IUserInfo>) {
+function useUsers() {
     const client = useHttp()
-
-    return useQuery<IUserInfo[]>('users', () => client('users') )
+    const getData = () => client('users')
+    return useQuery<IUserInfo[]>('users', getData )
 }
 
 export default useUsers

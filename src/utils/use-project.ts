@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "screens/project-list/list";
 import useProjectsParam from "screens/project-list/use-projects-param";
@@ -8,11 +9,14 @@ import { useHttp } from "./http"
  */
 export function useProjects(params?: Partial<Project>) {
     const client = useHttp();
-    const data = cleanObj(params)
 
-    return useQuery<Project[], Error>( ['projects', data], () => 
-        client('projects', {data})
-    )
+    const data = useMemo(() => {
+        return cleanObj(params)
+    }, [params])
+
+    const getData = () => client('projects', {data})
+
+    return useQuery<Project[], Error>( ['projects', data], getData)
 }
 /**
  * 获取某一项project
@@ -21,7 +25,7 @@ export function useProjects(params?: Partial<Project>) {
     const client = useHttp();
     const getData = () => client(`projects/${id}`)
 
-    return useQuery(['projects', id], getData, {
+    return useQuery(['project', id], getData, {
         enabled: !!id // id为空时不触发
     })
 }
@@ -102,7 +106,7 @@ function useDelConfig(queryKey: QueryKey) {
 }
 function useUpdataConfig(queryKey: QueryKey) {
     return useConfig(queryKey, (target, old) => {
-        const newItems = old.map(item => {
+        const newItems = old?.map(item => {
             return item.id === target.id 
             ? {...item, ...target} 
             : item
@@ -112,6 +116,6 @@ function useUpdataConfig(queryKey: QueryKey) {
 }
 
 export function useProjectsQuery() {
-    // const { param } = useProjectsParam()
-    return ['projects']
+    const { param } = useProjectsParam()
+    return ['projects', cleanObj(param)]
 }

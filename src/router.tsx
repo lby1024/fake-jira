@@ -8,13 +8,11 @@ const XRouter: FC = () => {
 
     return <div>
         <XHeader />
-        <BrowserRouter>
-            <Routes>
-                <Route path='/projects' element={<PageProjectList/>} />
-                <Route path='/projects/:id/*' element={<PProject/>} />
-                <Navigate to='/projects' />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route path='/projects' element={<PageProjectList/>} />
+            <Route path='/projects/:id/*' element={<PProject/>} />
+            <Navigate to='/projects' />
+        </Routes>
 
     </div>
 }
