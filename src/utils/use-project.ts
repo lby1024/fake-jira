@@ -1,31 +1,35 @@
+import { IProject } from "models/project";
+import { EQueryKey } from "models/query-key";
 import { useMemo } from "react";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { Project } from "screens/project-list/list";
 import useProjectsParam from "screens/project-list/use-projects-param";
 import { cleanObj } from "utils";
 import { useHttp } from "./http"
 /**
  * 获取所有projects
  */
-export function useProjects(params?: Partial<Project>) {
+export function useProjects(params?: Partial<IProject>) {
     const client = useHttp();
 
     const data = useMemo(() => {
         return cleanObj(params)
     }, [params])
 
-    const getData = () => client('projects', {data})
+    const getData = () => client(EQueryKey.projects, {data})
 
-    return useQuery<Project[], Error>( ['projects', data], getData)
+    return useQuery<IProject[], Error>( [EQueryKey.projects, data], getData)
 }
 /**
  * 获取某一项project
  */
  export function useProject(id?: number) {
     const client = useHttp();
-    const getData = () => client(`projects/${id}`)
+    const getData = async () => {
+        const res = await client(`${EQueryKey.projects}/${id}`)
+        return res
+    }
 
-    return useQuery(['project', id], getData, {
+    return useQuery([EQueryKey.project, id], getData, {
         enabled: !!id // id为空时不触发
     })
 }
@@ -34,9 +38,8 @@ export function useProjects(params?: Partial<Project>) {
  */
 export function useEditProject(queryKey: QueryKey) {
     const client = useHttp();
-    const queryClient = useQueryClient()
 
-    const updata = (params: Partial<Project>) => client(`projects/${params.id}`, {
+    const updata = (params: Partial<IProject>) => client(`${EQueryKey.projects}/${params.id}`, {
         data: params,
         method: 'PATCH'
     })
@@ -48,9 +51,8 @@ export function useEditProject(queryKey: QueryKey) {
  */
 export function useAddProject(queryKey: QueryKey) {
     const client = useHttp()
-    const queryClient = useQueryClient()
 
-    const add = (params: Partial<Project>) => client('projects', {
+    const add = (params: Partial<IProject>) => client(EQueryKey.projects, {
         data: params,
         method: 'POST',
     })
@@ -62,24 +64,23 @@ export function useAddProject(queryKey: QueryKey) {
  */
 export function useDeleteProject(queryKey: QueryKey) {
     const client = useHttp()
-    const queryClient = useQueryClient()
 
-    const del = (params: Partial<Project>) => client(`projects/${params.id}`, {
+    const del = (params: Partial<IProject>) => client(`${EQueryKey.projects}/${params.id}`, {
         method: "DELETE",
     })
 
     return useMutation(del, useDelConfig(queryKey))
 }
 
-type TCallBack = (target: Partial<Project>, old: Project[]) => Project[]
+type TCallBack = (target: Partial<IProject>, old: IProject[]) => IProject[]
 
 function useConfig(queryKey: QueryKey, callback: TCallBack) {
     const queryClient = useQueryClient()
     return {
-        onMutate: async (params: Partial<Project>) => {
+        onMutate: async (params: Partial<IProject>) => {
             const preData = queryClient.getQueryData(queryKey)
             queryClient.setQueryData(queryKey, (old) => {
-                const oldData = old as Project[]
+                const oldData = old as IProject[]
                 return callback(params, oldData)
             })
             return {preData}
@@ -93,7 +94,7 @@ function useConfig(queryKey: QueryKey, callback: TCallBack) {
 
 function useAddConfig(queryKey: QueryKey) {
     return useConfig(queryKey, (target, old) => {
-        const item  = target as Project
+        const item  = target as IProject
         old = old || []
         return [...old, item]
     })
@@ -117,5 +118,5 @@ function useUpdataConfig(queryKey: QueryKey) {
 
 export function useProjectsQuery() {
     const { param } = useProjectsParam()
-    return ['projects', cleanObj(param)]
+    return [EQueryKey.projects, cleanObj(param)]
 }

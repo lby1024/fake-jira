@@ -2,40 +2,38 @@ import { Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/lib/table'
 import XCollection from 'components/collection'
 import dayjs from 'dayjs'
+import { IProject } from 'models/project'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useEditProject, useProjectsQuery } from 'utils/use-project'
+import XTableMore from './more'
 
-export interface Project {
-    id: number;
-    name: string;
-    personId: number;
-    pin: boolean;
-    organization: string;
-    created: string;
-}
-
-interface ListProps extends TableProps<Project> {
-    list: Project[];
+interface ListProps extends TableProps<IProject> {
+    list: IProject[];
     users: IUserInfo[];
 }
 
 const XList: FC<ListProps> = ({list, users, ...props}) => {
-
+    /**
+     * 编辑
+     */
     const project = useEditProject(
         useProjectsQuery()
     )
-    const onCheckedChange = (id: number) => (pin: boolean) => {
+    /**
+     * 收藏/取消收藏
+     */
+    const onSave = (id: number) => (pin: boolean) => {
         project.mutate({id, pin})
     }
-    const columns: ColumnsType<Project> = [
+    const columns: ColumnsType<IProject> = [
         {
             title: <XCollection checked={true} />,
             dataIndex: 'pin',
             key: 'pin',
             render(value, project) {
-               return <XCollection checked={project.pin} onCheckedChange={onCheckedChange(project.id)} />
+               return <XCollection checked={project.pin} onCheckedChange={onSave(project.id)} />
             }
         },
         {
@@ -62,6 +60,11 @@ const XList: FC<ListProps> = ({list, users, ...props}) => {
             key: 'created',
             render(v, project) {
                 return project.created ? dayjs(project.created).format('YYYY-MM-DD') : '无'
+            }
+        },{
+            title: '编辑',
+            render(value, project) {
+                return <XTableMore project={project} />
             }
         }
     ]

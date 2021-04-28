@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Drawer, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useAddProject, useEditProject, useProjectsQuery } from "utils/use-project";
 import XProjectForm from "./project-form";
 import { useAlertProject } from "./use-alert-project";
@@ -14,7 +14,6 @@ const XAlertProjectForm: FC = () => {
         useProjectsQuery()
     )
     const [form] = useForm()
-
     const submit = async (data: any) => {
         await action.mutateAsync({...formModel.data, ...data})
         close()
@@ -25,22 +24,33 @@ const XAlertProjectForm: FC = () => {
         formModel.close()
     }
 
+    useEffect(() => {
+        form.setFieldsValue(formModel.data)
+    }, [formModel.data])
 
     return <CSS>
         <Drawer 
             visible={formModel.show} 
             onClose={close} 
+            // forceRender={true}
             width='100%' >
             {
                 formModel.isLoading 
                 ? <Spin size='large' />
-                : <XProjectForm form={form} loading={false} onFinish={submit} />
+                : <XProjectForm 
+                    form={form} 
+                    loading={action.isLoading} 
+                    onFinish={submit} 
+                />
             }    
-        </Drawer>
+         </Drawer>
     </CSS>
 }
 
 export default XAlertProjectForm
 
 const CSS = styled.div`
+    .ant-spin-spinning {
+        margin: 10vh auto;
+    }
 `;

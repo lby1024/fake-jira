@@ -1,15 +1,15 @@
 import { FC } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PEpic from "screens/epic";
 import PKanban from "screens/kanban";
 
 const PProject: FC = () => {
-    
+
     return <div className='' >
-        left-rihgt
         <Routes>
             <Route path='/kanban' element={<PKanban/>} />
             <Route path='/epic' element={<PEpic/>} />
+            <Navigate to={window.location.pathname+'/kanban'} replace={true} />
         </Routes>
     </div>
 }

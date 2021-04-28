@@ -1,8 +1,11 @@
 import AlertModel, { IProjectForm } from "models/alert"
+import { EQueryKey } from "models/query-key"
 import { useState } from "react"
+import { useQueryClient } from "react-query"
 import { useAddProject, useEditProject, useProject } from "utils/use-project"
 
 export const useAlertProject = () => {
+    const queryClient = useQueryClient()
     const [show, setShow] = useState(false)
     const [params, setParams] = useState<IProjectForm>()
     const project = useProject(params?.id)
@@ -14,6 +17,7 @@ export const useAlertProject = () => {
 
     const close = () => {
         setShow(false)
+        queryClient.invalidateQueries([EQueryKey.project, params?.id])
     }
 
     return {

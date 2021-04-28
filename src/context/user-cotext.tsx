@@ -1,6 +1,7 @@
 import { FullPageError, FullPageLoading } from 'components/lib'
 import User, { UserForm, IUserInfo } from 'models/user'
 import React, { FC, useContext } from 'react'
+import { useQueryClient } from 'react-query'
 import { useMount } from 'utils'
 import useAsync from 'utils/use-async'
 
@@ -14,6 +15,7 @@ UserContext.displayName = 'UserContext'
 
 export const UserProvider: FC = (props) => {
     const user = useAsync<IUserInfo|null>()
+    const queryClient = useQueryClient()
 
     useMount(() => {
         user.run(User.bootstrapUser())
@@ -21,7 +23,10 @@ export const UserProvider: FC = (props) => {
 
     const register = (form: UserForm) => User.registry(form).then(res => user.setData(res))
     const login = (form: UserForm) => User.login(form).then(user.setData) // 一个意思: .then(res => setUser(res))
-    const logout = () => User.logout().then(() => user.setData(null))
+    const logout = () => User.logout().then(() => {
+        user.setData(null)
+        queryClient.clear()
+    })
 
     if(user.isIdle || user.isLoading) {
         return <FullPageLoading/>
