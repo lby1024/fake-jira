@@ -1,8 +1,7 @@
 import { Button, Dropdown, Menu } from "antd"
 import AlertModel from "models/alert"
-import { IProject } from "models/project"
+import { IProject, useDeleteProject, useProjectsQuery } from "models/project"
 import { FC } from "react"
-import { useDeleteProject, useProjectsQuery } from "utils/use-project"
 
 interface IXTableMore {
     project: IProject

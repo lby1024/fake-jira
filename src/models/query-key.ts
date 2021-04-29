@@ -1,4 +1,5 @@
 export enum EQueryKey {
     projects = 'projects',
-    project = 'project'
+    project = 'project',
+    kanbans = 'kanbans'
 }

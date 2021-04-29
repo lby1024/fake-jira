@@ -1,8 +1,8 @@
 import AlertModel, { IProjectForm } from "models/alert"
+import { useProject } from "models/project"
 import { EQueryKey } from "models/query-key"
 import { useState } from "react"
 import { useQueryClient } from "react-query"
-import { useAddProject, useEditProject, useProject } from "utils/use-project"
 
 export const useAlertProject = () => {
     const queryClient = useQueryClient()

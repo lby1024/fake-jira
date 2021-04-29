@@ -3,12 +3,12 @@ import { useDebounce, useTitle } from 'utils'
 import XList from './table'
 import SearchPanel from './search'
 import styled from '@emotion/styled';
-import {useProjects} from 'utils/use-project'
 import useUsers from 'utils/use-users'
 import { Button, Row } from 'antd';
 import useProjectsParam from './use-projects-param';
 import AlertModel from 'models/alert';
 import XErrorBox from 'components/err-box';
+import { useProjects } from 'models/project';
 
 const PageProjectList: FC = () => {
     useTitle('项目列表')

@@ -2,11 +2,10 @@ import { Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/lib/table'
 import XCollection from 'components/collection'
 import dayjs from 'dayjs'
-import { IProject } from 'models/project'
+import { IProject, useEditProject, useProjectsQuery } from 'models/project'
 import { IUserInfo } from 'models/user'
 import React, { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { useEditProject, useProjectsQuery } from 'utils/use-project'
 import XTableMore from './more'
 
 interface ListProps extends TableProps<IProject> {

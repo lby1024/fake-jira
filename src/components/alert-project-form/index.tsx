@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { Drawer, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import { useAddProject, useEditProject, useProjectsQuery } from "models/project";
 import React, { FC, useEffect } from "react";
-import { useAddProject, useEditProject, useProjectsQuery } from "utils/use-project";
 import XProjectForm from "./project-form";
 import { useAlertProject } from "./use-alert-project";
 
@@ -32,7 +32,7 @@ const XAlertProjectForm: FC = () => {
         <Drawer 
             visible={formModel.show} 
             onClose={close} 
-            // forceRender={true}
+            forceRender={true}
             width='100%' >
             {
                 formModel.isLoading 
