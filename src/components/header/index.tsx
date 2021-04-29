@@ -31,7 +31,7 @@ const XHeader: FC = () => {
 export default XHeader
 
 const Container = styled.div`
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) inset;
     height: 6rem;
     display: grid;
     grid-template-columns: 18rem 100px 100px 1fr 100px;

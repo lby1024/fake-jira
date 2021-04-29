@@ -5,7 +5,7 @@ import React, { FC } from "react";
 import { useTitle } from "utils";
 import XKanbancolumn from './kanban-column';
 import XKanbanSearch from './kanban-search';
-import useKanbanParam, { useProjectInUrl } from "./utils";
+import { useProjectInUrl } from "./utils";
 
 const PKanban: FC = () => {
     useTitle("看板列表");
@@ -33,12 +33,14 @@ export default PKanban
 
 
 const CSS = styled.div`
-    background-color: skyblue;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     .container {
         display: flex;
+        flex: 1;
         .column {
             margin-right: 1.5rem;
-            min-height: 70vh;
         }
     }
 `
