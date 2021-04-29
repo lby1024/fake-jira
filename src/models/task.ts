@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { useProjectIdInUrl } from "screens/kanban/utils";
 import { useHttp } from "utils/http";
 import { EQueryKey } from "./query-key";
 
@@ -24,6 +25,8 @@ export interface ITaskType {
 
 export const useTasks = (param?: Partial<ITask>) => {
   const client = useHttp();
+  const projectId = useProjectIdInUrl()
+  param = {...param, projectId}
   return useQuery<ITask[]>([EQueryKey.tasks, param], () =>
     client("tasks", { data: param })
   );

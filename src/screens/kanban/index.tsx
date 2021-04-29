@@ -5,7 +5,7 @@ import React, { FC } from "react";
 import { useTitle } from "utils";
 import XKanbancolumn from './kanban-column';
 import XKanbanSearch from './kanban-search';
-import { useProjectInUrl } from "./utils";
+import useKanbanParam, { useProjectInUrl } from "./utils";
 
 const PKanban: FC = () => {
     useTitle("看板列表");
