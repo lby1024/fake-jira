@@ -8,11 +8,11 @@ export interface IKanban {
   projectId: number;
 }
  
-export function useKanban(params?: IKanban) {
+export function useKanbans(params?: Partial<IKanban>) {
   const client = useHttp()
   const getData = () => {
     return client('kanbans', {data: params})
   }
 
-  return useQuery([EQueryKey.kanbans, params], getData)
+  return useQuery<IKanban[]>([EQueryKey.kanbans, params], getData)
 }
