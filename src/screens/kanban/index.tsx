@@ -1,19 +1,22 @@
 import styled from '@emotion/styled';
 import { useKanbans } from 'models/kanban';
 import { useProject } from "models/project";
-import { FC } from "react";
+import React, { FC } from "react";
 import { useTitle } from "utils";
 import XKanbancolumn from './kanban-column';
+import XKanbanSearch from './kanban-search';
 import { useProjectInUrl } from "./utils";
 
 const PKanban: FC = () => {
     useTitle("看板列表");
     const project = useProjectInUrl()
     const kanbans = useKanbans()
-    console.log(project.data, '----- kanbans')
     
     return <CSS>
         <h1>{project.data?.name}看板</h1>
+
+        <XKanbanSearch />
+
         <div className="container">
             {
                 kanbans.data?.map(item => <XKanbancolumn 

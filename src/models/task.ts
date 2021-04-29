@@ -16,11 +16,21 @@ export interface ITask {
   note: string;
 }
 
+export interface ITaskType {
+  id: number;
+  name: string;
+}
+
+
 export const useTasks = (param?: Partial<ITask>) => {
   const client = useHttp();
-
   return useQuery<ITask[]>([EQueryKey.tasks, param], () =>
     client("tasks", { data: param })
   );
+};
+
+export const useTaskTypes = () => {
+  const client = useHttp();
+  return useQuery<ITaskType[]>([EQueryKey.taskTypes], () => client("taskTypes"));
 };
   

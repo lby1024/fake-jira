@@ -1,7 +1,9 @@
 import styled from "@emotion/styled"
 import { Row } from "antd"
 import { IKanban } from "models/kanban"
+import { useTasks } from "models/task"
 import React, { FC } from "react"
+import XTaskCard from "../task-card"
 
 interface IXKanbancolumn {
     info: IKanban
@@ -9,14 +11,20 @@ interface IXKanbancolumn {
 }
 
 const XKanbancolumn: FC<IXKanbancolumn> = ({info, className}) => {
-    console.log(info, '--- 11')
+    const allTasks = useTasks()
+    const tasks = allTasks.data?.filter(item => item.kanbanId === info.id)
+
     return <CSS className={className} >
         <Row>
             <h3>{info.name}</h3>
         </Row>
-        <div className="container">
-
-        </div>
+        {
+            tasks?.map(task => <XTaskCard 
+                info={task} 
+                className='task-card' 
+                key={task.id}
+            />)
+        }
     </CSS>
 }
 
@@ -29,4 +37,7 @@ const CSS = styled.div`
     display: flex;
     flex-direction: column;
     padding: 0.7rem 0.7rem 1rem;
+    .task-card {
+        margin-bottom: .5rem;
+    }
 `
