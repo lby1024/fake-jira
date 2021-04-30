@@ -4,11 +4,11 @@ import { XRow } from "components/css-in-js/row";
 import XTaskTypeSelect from "components/tasktype-select";
 import XUserSelect from "components/user-select";
 import React, { FC } from "react";
-import useKanbanParam from "../utils";
+import useTasksParam from "../utils";
 
 const XKanbanSearch: FC = () => {
 
-    const {param, setParams, reset} = useKanbanParam()
+    const {param, setParams, reset} = useTasksParam()
 
     return <XRow gap={1} marginBottom={2} >
         <Input 

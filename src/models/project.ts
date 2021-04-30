@@ -1,4 +1,4 @@
-import { EQueryKey } from "models/query-key";
+import { EQueryKey, useAddConfig, useDelConfig, useUpdataConfig } from "models/query-key";
 import { useMemo } from "react";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import useProjectsParam from "screens/project-list/use-projects-param";
@@ -78,50 +78,6 @@ export function useDeleteProject(queryKey: QueryKey) {
     })
 
     return useMutation(del, useDelConfig(queryKey))
-}
-
-type TCallBack = (target: Partial<IProject>, old: IProject[]) => IProject[]
-
-function useConfig(queryKey: QueryKey, callback: TCallBack) {
-    const queryClient = useQueryClient()
-    return {
-        onMutate: async (params: Partial<IProject>) => {
-            const preData = queryClient.getQueryData(queryKey)
-            queryClient.setQueryData(queryKey, (old) => {
-                const oldData = old as IProject[]
-                return callback(params, oldData)
-            })
-            return {preData}
-        },
-        onError: (err: any, newItem: any, context: any) => {
-            queryClient.setQueryData(queryKey, context.preData)
-        },
-        onSuccess: () => queryClient.invalidateQueries(queryKey)
-    }
-}
-
-function useAddConfig(queryKey: QueryKey) {
-    return useConfig(queryKey, (target, old) => {
-        const item  = target as IProject
-        old = old || []
-        return [...old, item]
-    })
-}
-function useDelConfig(queryKey: QueryKey) {
-    return useConfig(queryKey, (target, old) => {
-        const newItems = old.filter(item => item.id !== target.id)
-        return [...newItems]
-    })
-}
-function useUpdataConfig(queryKey: QueryKey) {
-    return useConfig(queryKey, (target, old) => {
-        const newItems = old?.map(item => {
-            return item.id === target.id 
-            ? {...item, ...target} 
-            : item
-        })
-        return [...newItems]
-    })
 }
 
 export function useProjectsQuery() {

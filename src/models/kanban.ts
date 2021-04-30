@@ -1,18 +1,34 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useProjectIdInUrl } from "screens/kanban/utils";
 import { useHttp } from "utils/http";
-import { EQueryKey } from "./query-key";
+import { EQueryKey, useAddConfig } from "./query-key";
+import { ITask } from "./task";
 
 export interface IKanban {
   id: number;
   name: string;
   projectId: number;
 }
+
+export function useKanbanQueryKey() {
+  const projectId = useProjectIdInUrl()
+  return [EQueryKey.kanbans, {projectId}]
+}
  
 export function useKanbans(params?: Partial<IKanban>) {
   const client = useHttp()
-  const getData = () => {
-    return client('kanbans', {data: params})
-  }
-
+  const getData = () => client('kanbans', {data: params})
   return useQuery<IKanban[]>([EQueryKey.kanbans, params], getData)
+}
+
+export function useAddKanban() {
+  const client = useHttp()
+  const queryKey = useKanbanQueryKey()
+
+  const addTask = (params: Partial<ITask>) => client(`tasks`, {
+    data: params,
+    method: "POST",
+  })
+
+  return useMutation(addTask, useAddConfig(queryKey))
 }

@@ -15,7 +15,7 @@ export function useProjectInUrl() {
 }
 
 
-export default function useKanbanParam() {
+export default function useTasksParam() {
     const [param, setParams] = useUrlParams(['name', 'processorId', 'typeId', 'tagId'])
 
     const p = useMemo(() => {
