@@ -7,7 +7,7 @@ interface IXTaskTypeSelect extends React.ComponentProps<typeof XIdSelect> {
 }
 const XTaskTypeSelect: FC<IXTaskTypeSelect> = (props) => {
     const taskTypes = useTaskTypes()
-
+    
     return <XIdSelect options={taskTypes.data || []} {...props} />
 }
 
