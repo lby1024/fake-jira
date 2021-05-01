@@ -4,6 +4,7 @@ import { useProject } from "models/project";
 import React, { FC } from "react";
 import { useTitle } from "utils";
 import XKanbancolumn from './kanban-column';
+import XAddKanban from './kanban-column/add-kanban';
 import XKanbanSearch from './kanban-search';
 import { useProjectInUrl } from "./utils";
 
@@ -25,6 +26,7 @@ const PKanban: FC = () => {
                     className='column'
                 />)
             }
+            <XAddKanban />
         </div>
     </CSS>
 }
@@ -39,6 +41,7 @@ const CSS = styled.div`
     .container {
         display: flex;
         flex: 1;
+        overflow: scroll;
         .column {
             margin-right: 1.5rem;
         }

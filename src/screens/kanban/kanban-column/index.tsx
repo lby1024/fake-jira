@@ -32,13 +32,14 @@ const XKanbancolumn: FC<IXKanbancolumn> = ({info, className}) => {
 
 export default XKanbancolumn
 
-const CSS = styled.div`
+export const CSS = styled.div`
     min-width: 27rem;
     border-radius: 6px;
     background-color: rgb(244, 245, 247);
     display: flex;
     flex-direction: column;
     padding: 0.7rem 0.7rem 1rem;
+    overflow: scroll;
     .task-card {
         margin-bottom: .5rem;
     }
