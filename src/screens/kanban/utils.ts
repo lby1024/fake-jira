@@ -17,6 +17,7 @@ export function useProjectInUrl() {
 
 export default function useTasksParam() {
     const [param, setParams] = useUrlParams(['name', 'processorId', 'typeId', 'tagId'])
+    const projectId = useProjectIdInUrl()
 
     const p = useMemo(() => {
         return {
@@ -24,8 +25,9 @@ export default function useTasksParam() {
             processorId: Number(param.processorId) || undefined,
             typeId: Number(param.typeId) || undefined,
             tagId: Number(param.tagId) || undefined,
+            projectId
         }
-    }, [param])
+    }, [param, projectId])
 
     const reset = () => {
         setParams({

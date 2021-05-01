@@ -1,7 +1,7 @@
-import { useQuery } from "react-query";
-import { useProjectIdInUrl } from "screens/kanban/utils";
+import { useMutation, useQuery } from "react-query";
+import useTasksParam, { useProjectIdInUrl } from "screens/kanban/utils";
 import { useHttp } from "utils/http";
-import { EQueryKey } from "./query-key";
+import { EQueryKey, useAddConfig } from "./query-key";
 
 export interface ITask {
   id: number;
@@ -22,15 +22,34 @@ export interface ITaskType {
   name: string;
 }
 
+export const useTaskQueryKey = () => {
+  const { param } = useTasksParam()  
+  return [EQueryKey.tasks, param]
+}
 
-export const useTasks = (param?: Partial<ITask>) => {
+
+export const useTasks = () => {
   const client = useHttp();
-  const projectId = useProjectIdInUrl()
-  param = {...param, projectId}
-  return useQuery<ITask[]>([EQueryKey.tasks, param], () =>
-    client("tasks", { data: param })
+  
+  const queryKey = useTaskQueryKey()
+  const data = queryKey[1] as any
+  
+  return useQuery<ITask[]>(queryKey, () =>
+    client("tasks", { data })
   );
 };
+
+export const useAddTask = () => {
+  const client = useHttp();
+  const queryKey = useTaskQueryKey()
+
+  const addTask = (param: Partial<ITask>) => client('tasks', {
+    data: param,
+    method: 'POST'
+  })
+
+  return useMutation(addTask, useAddConfig(queryKey))
+}
 
 export const useTaskTypes = () => {
   const client = useHttp();

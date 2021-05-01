@@ -4,7 +4,7 @@ import { IKanban } from "models/kanban"
 import { useTasks } from "models/task"
 import React, { FC } from "react"
 import XTaskCard from "../task-card"
-import useTasksParam from "../utils"
+import XAddTask from "./add-task"
 
 interface IXKanbancolumn {
     info: IKanban
@@ -12,8 +12,7 @@ interface IXKanbancolumn {
 }
 
 const XKanbancolumn: FC<IXKanbancolumn> = ({info, className}) => {
-    const {param} = useTasksParam()
-    const allTasks = useTasks(param)
+    const allTasks = useTasks()
     const tasks = allTasks.data?.filter(item => item.kanbanId === info.id)
 
     return <CSS className={className} >
@@ -27,6 +26,7 @@ const XKanbancolumn: FC<IXKanbancolumn> = ({info, className}) => {
                 key={task.id}
             />)
         }
+        <XAddTask kanbanId={info.id} />
     </CSS>
 }
 
