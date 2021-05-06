@@ -9,7 +9,7 @@ interface IXTaskIcon {
 
 const XTaskIcon: FC<IXTaskIcon> = ({info}) => {
     const icon = useMemo(() => {
-        if(info?.typeId === 1) {
+        if(info?.typeId === 3) {
             return taskIcon
         }
         return bugIcon

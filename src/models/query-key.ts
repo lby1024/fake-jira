@@ -5,6 +5,7 @@ export enum EQueryKey {
     project = 'project',
     kanbans = 'kanbans',
     tasks = 'tasks',
+    task = 'task',
     taskTypes = 'taskTypes',
 }
 type TCallBack = (target: any, old?: any[]) => any[]

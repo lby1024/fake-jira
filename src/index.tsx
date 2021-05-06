@@ -9,12 +9,10 @@ import './index.css';
 
 loadServer(() =>
   ReactDOM.render(
-    <React.StrictMode>
-      <AppProvider>
-        <DevTools />
-        <App />
-      </AppProvider>
-    </React.StrictMode>,
+    <AppProvider>
+      <DevTools />
+      <App />
+    </AppProvider>,
     document.getElementById("root")
   )
 );
