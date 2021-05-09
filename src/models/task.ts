@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "react-query";
 import useTasksParam, { useProjectIdInUrl } from "screens/kanban/utils";
 import { useHttp } from "utils/http";
-import { EQueryKey, useAddConfig, useUpdataConfig } from "./query-key";
+import { EQueryKey, useAddConfig, useDelConfig, useUpdataConfig } from "./query-key";
 
 export interface ITask {
   id: number;
@@ -89,4 +89,17 @@ export const useEditTask = () => {
     editTask, 
     useUpdataConfig(queryKeyt)
   )
+}
+/**
+ * 删除 task
+ */
+export const useDeleteTask = () => {
+  const client = useHttp()
+  const queryKey = useTaskQueryKey()
+
+  const deleteTask = (param: Partial<ITask>) => client(`tasks/${param.id}`, {
+    method: 'DELETE'
+  })
+
+  return useMutation(deleteTask, useDelConfig(queryKey))
 }

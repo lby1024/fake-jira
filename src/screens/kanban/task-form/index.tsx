@@ -4,7 +4,7 @@ import AlertModel, { ITaskForm } from 'models/alert';
 import { useForm } from 'antd/lib/form/Form';
 import XUserSelect from 'components/user-select';
 import XTaskTypeSelect from 'components/tasktype-select';
-import { ITask, useEditTask, useTask } from 'models/task';
+import { ITask, useDeleteTask, useEditTask, useTask } from 'models/task';
 
 const layout = {
   labelCol: {span: 8},
@@ -17,6 +17,7 @@ const XAlertTaskForm: FC = () => {
   const [param, setParam] = useState<ITaskForm>()
   const {data} = useTask(param?.taskId)
   const { mutate: updateTask, isLoading: updating } = useEditTask()
+  const { mutate: deleteTask } = useDeleteTask()
 
   AlertModel.taskForm = (param: ITaskForm) => {
     setShow(true);
@@ -29,10 +30,20 @@ const XAlertTaskForm: FC = () => {
     setShow(false);
   };
 
-  const handleCancel = () => {
+  const close = () => {
     form.resetFields();
     setShow(false);
   };
+
+  const onDeleteTask = () => {
+    close()
+    Modal.confirm({
+      title: '确认删除任务吗?',
+      onOk: () => {
+        data && deleteTask(data)
+      }
+    })
+  }
 
   useEffect(() => {
     if(show && data) {
@@ -47,7 +58,7 @@ const XAlertTaskForm: FC = () => {
         confirmLoading={updating}
         visible={show} 
         onOk={handleOk} 
-        onCancel={handleCancel}
+        onCancel={close}
         forceRender={true}
       >
         <Form form={form} {...layout} className='form' >
@@ -67,7 +78,7 @@ const XAlertTaskForm: FC = () => {
           </Form.Item>
 
           <div style={{textAlign: 'right'}} >
-            <Button danger >删除</Button>
+            <Button danger onClick={onDeleteTask} >删除</Button>
           </div>
         </Form>
     </Modal>
