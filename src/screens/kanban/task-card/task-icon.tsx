@@ -9,10 +9,10 @@ interface IXTaskIcon {
 
 const XTaskIcon: FC<IXTaskIcon> = ({info}) => {
     const icon = useMemo(() => {
-        if(info?.typeId === 3) {
-            return taskIcon
+        if(info?.typeId === 4) {
+            return bugIcon
         }
-        return bugIcon
+        return taskIcon
     }, [info])
     
     return <img src={icon} alt="icon"/>

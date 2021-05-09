@@ -26,7 +26,6 @@ function useConfig(queryKey: QueryKey, callback: TCallBack) {
         onSuccess: () => queryClient.invalidateQueries(queryKey)
     }
 }
-
 export function useAddConfig(queryKey: QueryKey) {
     return useConfig(queryKey, (target, old) => {
         old = old || []

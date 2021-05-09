@@ -22,7 +22,7 @@ const PKanban: FC = () => {
             {
                 kanbans.data?.map(item => <XKanbancolumn 
                     info={item} 
-                    key={item.id} 
+                    key={item.id || 0} 
                     className='column'
                 />)
             }

@@ -1,10 +1,11 @@
 import styled from "@emotion/styled"
-import { Row } from "antd"
+import { XRow } from "components/css-in-js/row"
 import { IKanban } from "models/kanban"
 import { useTasks } from "models/task"
 import React, { FC } from "react"
 import XTaskCard from "../task-card"
 import XAddTask from "./add-task"
+import XMoreKanban from "./more-kanban"
 
 interface IXKanbancolumn {
     info: IKanban
@@ -16,14 +17,15 @@ const XKanbancolumn: FC<IXKanbancolumn> = ({info, className}) => {
     const tasks = allTasks.data?.filter(item => item.kanbanId === info.id)
 
     return <CSS className={className} >
-        <Row>
+        <XRow between={true} >
             <h3>{info.name}</h3>
-        </Row>
+            <XMoreKanban info={info} />
+        </XRow>
         {
             tasks?.map(task => <XTaskCard 
                 info={task} 
                 className='task-card' 
-                key={task.id}
+                key={task.id||0}
             />)
         }
         <XAddTask kanbanId={info.id} />
