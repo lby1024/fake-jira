@@ -1,7 +1,7 @@
 import { useQuery } from "react-query"
-import { getToken, localStorageKey } from "./localstorage"
+import { localStorageKey } from "./localstorage"
 import { queryKey } from "./react-query"
-import { request, useHttp } from "./request"
+import { request } from "./request"
 
 export interface IUser {
     id: number;
@@ -22,7 +22,8 @@ export const logout = () => {
 }
 
 function getUserInfo() {
-    const token = getToken()
+    // 只有获取userInfo时才从localstorage中获取token
+    const token = window.localStorage.getItem(localStorageKey.token) || undefined
     return request('me', {token})
 }
 
