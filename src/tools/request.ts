@@ -1,5 +1,7 @@
 import * as qs from 'qs'
-import { logout } from './user';
+import { useQueryClient } from 'react-query';
+import { queryKey } from './react-query';
+import { IUser, logout } from './user';
 
 export const api = {
 
@@ -53,4 +55,16 @@ async function resolveRes(res: Response) {
     } else {
         return Promise.reject(data)
     }
+}
+/**
+ * 
+ */
+export function useHttp() {
+    const queryClient = useQueryClient()
+    const userInfo = queryClient.getQueryData<IUser>(queryKey.userInfo)
+
+    return (api:string, cfg: IConfig) => request(api, {
+        ...cfg,
+        token: userInfo?.token
+    })
 }
