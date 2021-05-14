@@ -3,16 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { DevTools, loadServer } from "jira-dev-tool";
-import { AppProvider } from 'context';
 import 'antd/dist/antd.less';
 import './index.css';
 
 loadServer(() =>
   ReactDOM.render(
-    <AppProvider>
+    <div>
       <DevTools />
       <App />
-    </AppProvider>,
+    </div>,
     document.getElementById("root")
   )
 );
