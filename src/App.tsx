@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       { user ? <XRouter /> : <XLogout /> }
-      <XAlertProjectForm />
-      <XAlertTaskForm />
+      {/* <XAlertProjectForm />
+      <XAlertTaskForm /> */}
     </div>
   );
 }
