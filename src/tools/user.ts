@@ -21,10 +21,11 @@ export const logout = () => {
     window.location.reload() // 重新加载页面
 }
 
-function getUserInfo() {
+async function getUserInfo() {
     // 只有获取userInfo时才从localstorage中获取token
-    const token = window.localStorage.getItem(localStorageKey.token) || undefined
-    return request('me', {token})
+    const token = window.localStorage.getItem(localStorageKey.token)
+    if(token) return await request('me', {token})
+    return undefined
 }
 
 export function useUser() {

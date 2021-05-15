@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { DevTools, loadServer } from "jira-dev-tool";
 import 'antd/dist/antd.less';
 import './index.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
+
+const Content: FC = ({children}) => {
+  return <QueryClientProvider client={new QueryClient()} >
+    <BrowserRouter>{children}</BrowserRouter>
+  </QueryClientProvider>
+}
 
 loadServer(() =>
   ReactDOM.render(
-    <div>
+    <Content>
       <DevTools />
       <App />
-    </div>,
+    </Content>,
     document.getElementById("root")
   )
 );
