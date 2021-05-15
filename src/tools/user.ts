@@ -1,5 +1,6 @@
 import { useQuery } from "react-query"
-import { localStorageKey } from "./localstorage"
+import { API } from "./api"
+import { getToken, localStorageKey } from "./localstorage"
 import { queryKey } from "./react-query"
 import { request } from "./request"
 
@@ -11,8 +12,26 @@ export interface IUser {
     organization: string;
     token: string;
 }
+/**
+ * 登录注册
+ */
+export interface IUserForm {
+    username: string,
+    password: string
+}
 
-export const login = () => {
+export const register = async (data: IUserForm) => {
+    const res = await request(API.register, {
+        method: 'POST',
+        data
+    })
+}
+
+export const login = async (data: IUserForm) => {
+    const res = await request(API.login, {
+        method: 'POST',
+        data
+    })
 
 }
 
@@ -23,8 +42,8 @@ export const logout = () => {
 
 async function getUserInfo() {
     // 只有获取userInfo时才从localstorage中获取token
-    const token = window.localStorage.getItem(localStorageKey.token)
-    if(token) return await request('me', {token})
+    const token = getToken()
+    if(token) return await request(API.userInfo, {token})
     return undefined
 }
 

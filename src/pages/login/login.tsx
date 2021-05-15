@@ -2,31 +2,31 @@ import styled from "@emotion/styled";
 import { Input, Form, Button, Divider } from "antd";
 import React, { FC } from "react";
 
-const XLogin:FC = () => {
+interface IXLogin {
+    onError: (err: Error) => void
+}
+
+const XLogin:FC<IXLogin> = ({onError}) => {
     return <Content >
-        <h2 className="title" >登录</h2>
+        <Form>
+            <Form.Item name="username" rules={[{required: true, message: '请输入用户名'}]} >
+                <Input placeholder="用户名" />
+            </Form.Item>
 
-        <Form.Item name="username" >
-            <Input placeholder="用户名" />
-        </Form.Item>
+            <Form.Item name="password" rules={[{required: true, message: '请输入密码'}]} >
+                <Input.Password placeholder="密码" />
+            </Form.Item>
 
-        <Form.Item name="password" >
-            <Input.Password placeholder="密码" />
-        </Form.Item>
-
-        <Form.Item>
-            <Button className="btn" type="primary" htmlType="submit" >登录</Button>
-        </Form.Item>
+            <Form.Item>
+                <Button className="btn" type="primary" htmlType="submit" >登录</Button>
+            </Form.Item>
+        </Form>
     </Content>
 }
 
 export default XLogin
 
-const Content = styled(Form)`
-    .title {
-        margin-bottom: 2.4rem;
-        color: rgb(94, 108, 132);
-    }
+const Content = styled.div`
     .btn {
         width: 100%;
     }

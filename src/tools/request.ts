@@ -3,10 +3,6 @@ import { useQueryClient } from 'react-query';
 import { queryKey } from './react-query';
 import { IUser, logout } from './user';
 
-export const api = {
-
-}
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface IConfig extends RequestInit {
@@ -57,7 +53,7 @@ async function resolveRes(res: Response) {
     }
 }
 /**
- * 
+ * 登录, 注册, 获取用户信息, 不使用
  */
 export function useHttp() {
     const queryClient = useQueryClient()

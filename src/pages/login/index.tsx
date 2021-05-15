@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Card, Divider } from "antd";
+import { Card, Divider, Typography } from "antd";
 import { FC, useMemo, useState } from "react";
 import XLogin from "./login";
 import logo from "assets/logo.svg"
@@ -9,9 +9,14 @@ import XRegist from "./regist";
 
 const PUnlogin:FC = () => {
     const [isRegist, setIsRegist] = useState(false)
+    const [error, setError] = useState<Error>()
 
     const footerInfo = useMemo(() => {
-        return isRegist ? "登录" : "没有账号?注册新账号"
+        return isRegist ? "已经有账号了?直接登录" : "没有账号?注册新账号"
+    }, [isRegist])
+
+    const title = useMemo(() => {
+        return isRegist ? "注册" : "登录"
     }, [isRegist])
 
     return <Content>
@@ -19,9 +24,14 @@ const PUnlogin:FC = () => {
         <div className="bg" />
         <Card className='card' >
             {
+                <h2 className="title" >{title}</h2>
+            }{
+                error &&
+                <Typography.Text type="danger" >{error.message}</Typography.Text>
+            }{
                 isRegist
-                ? <XRegist />
-                : <XLogin />
+                ? <XRegist onError={setError} />
+                : <XLogin onError={setError} />
             }
             <Divider />
             <a onClick={() => setIsRegist(!isRegist)} >
@@ -61,5 +71,9 @@ export const Content = styled.div`
         background-image: url(${left}), url(${right});
         background-position: left bottom, right bottom;
         background-size: calc((100vw/2) - 21rem);
+    }
+    .title {
+        margin-bottom: 2.4rem;
+        color: rgb(94, 108, 132);
     }
 `
