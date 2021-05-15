@@ -1,14 +1,27 @@
 import styled from "@emotion/styled";
 import { Input, Form, Button, Divider } from "antd";
 import React, { FC } from "react";
+import { useLogin } from "tools/user";
 
 interface IXLogin {
     onError: (err: Error) => void
 }
 
+interface ILoginForm {
+    username: string;
+    password: string;
+}
+
 const XLogin:FC<IXLogin> = ({onError}) => {
-    return <Content >
-        <Form>
+
+    const {mutateAsync: login, isLoading} = useLogin()
+
+    const onFinish = (data: ILoginForm) => {
+        login(data).catch(err => onError(err))
+    }
+
+    return <Content>
+        <Form onFinish={onFinish} >
             <Form.Item name="username" rules={[{required: true, message: '请输入用户名'}]} >
                 <Input placeholder="用户名" />
             </Form.Item>
@@ -18,7 +31,7 @@ const XLogin:FC<IXLogin> = ({onError}) => {
             </Form.Item>
 
             <Form.Item>
-                <Button className="btn" type="primary" htmlType="submit" >登录</Button>
+                <Button className="btn" type="primary" htmlType="submit" loading={isLoading} >登录</Button>
             </Form.Item>
         </Form>
     </Content>

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Input, Form, Button } from "antd";
 import React, { FC } from "react";
-import { register } from "tools/user";
+import { useRegist } from "tools/user";
 
 interface IRegistForm {
     username: string;
@@ -15,14 +15,15 @@ interface IXRegist {
 
 const XRegist:FC<IXRegist> = ({onError}) => {
 
+    const {mutateAsync: regist, isLoading} = useRegist()
+
     const onFinish = ({cpassword, ...data}: IRegistForm) => {
         if(data.password !== cpassword) {
             const err = new Error('请确保两次密码相同')
             onError(err)
             return
         }
-        // register(data)
-
+        regist(data).catch(error => onError(error))
     }
 
     return <Content>
@@ -40,7 +41,7 @@ const XRegist:FC<IXRegist> = ({onError}) => {
             </Form.Item>
 
             <Form.Item>
-                <Button className="btn" type="primary" htmlType="submit" >注册</Button>
+                <Button className="btn" type="primary" htmlType="submit" loading={isLoading} >注册</Button>
             </Form.Item>
         </Form>
     </Content>

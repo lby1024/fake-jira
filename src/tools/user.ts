@@ -1,6 +1,7 @@
-import { useQuery } from "react-query"
-import { API } from "./api"
-import { getToken, localStorageKey } from "./localstorage"
+import { useMemo } from "react"
+import { useMutation, useQuery, useQueryClient } from "react-query"
+import { API, ILogin, IRegist } from "./api"
+import { getToken, localStorageKey, saveToken } from "./localstorage"
 import { queryKey } from "./react-query"
 import { request } from "./request"
 
@@ -12,27 +13,23 @@ export interface IUser {
     organization: string;
     token: string;
 }
-/**
- * 登录注册
- */
-export interface IUserForm {
-    username: string,
-    password: string
-}
 
-export const register = async (data: IUserForm) => {
-    const res = await request(API.register, {
+export const register = async (data: IRegist) => {
+    const {user} = await request(API.register, {
         method: 'POST',
         data
     })
+    saveToken(user.token)
+    return user
 }
 
-export const login = async (data: IUserForm) => {
-    const res = await request(API.login, {
+export const login = async (data: ILogin) => {
+    const {user} = await request(API.login, {
         method: 'POST',
         data
     })
-
+    saveToken(user.token)
+    return user
 }
 
 export const logout = () => {
@@ -43,10 +40,25 @@ export const logout = () => {
 async function getUserInfo() {
     // 只有获取userInfo时才从localstorage中获取token
     const token = getToken()
-    if(token) return await request(API.userInfo, {token})
-    return undefined
+    if(!token) return undefined
+    const res = await request(API.userInfo, {token})
+    return res.user
 }
 
 export function useUser() {
     return useQuery<IUser>(queryKey.userInfo, getUserInfo)
+}
+
+export function useRegist() {
+    const client = useQueryClient()
+    return useMutation(register, {
+        onSuccess: () => client.invalidateQueries(queryKey.userInfo)
+    })
+}
+
+export function useLogin() {
+    const client = useQueryClient()
+    return useMutation(login, {
+        onSuccess: () => client.invalidateQueries(queryKey.userInfo)
+    })
 }
