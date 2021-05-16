@@ -1,3 +1,5 @@
+import XLoading from 'components/loading';
+import XProjectsRouter from 'router/projects-router';
 import { logout, useUser } from 'tools/user';
 import XUnLogin from './pages/login'
 
@@ -9,9 +11,9 @@ function App() {
     <div className="App">
       {
         userInfo 
-        ? <div onClick={logout} >{`asdfasdf${JSON.stringify(userInfo)}`}</div>
+        ? <XProjectsRouter />
         : isLoading
-        ? <div>loading...</div>
+        ? <XLoading />
         : <XUnLogin />
       }
     </div>
