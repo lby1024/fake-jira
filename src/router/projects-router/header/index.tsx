@@ -26,6 +26,7 @@ const XHeader:FC = () => {
 export default XHeader
 
 const Content = styled.div`
+    padding: 0 3.5rem;
     height: 6rem;
     background-color: #fff;
     display: grid;
