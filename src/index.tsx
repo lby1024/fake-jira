@@ -7,10 +7,14 @@ import 'antd/dist/antd.less';
 import './index.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
+import XProjectForm from 'components/project-form';
 
 const Content: FC = ({children}) => {
   return <QueryClientProvider client={new QueryClient()} >
-    <BrowserRouter>{children}</BrowserRouter>
+    <BrowserRouter>
+      {children}
+      <XProjectForm />
+    </BrowserRouter>
   </QueryClientProvider>
 }
 

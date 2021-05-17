@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Input, Form, Button, Divider } from "antd";
+import { useTitle } from "hooks/use-title";
 import React, { FC } from "react";
 import { useLogin } from "tools/user";
 
@@ -14,6 +15,7 @@ interface ILoginForm {
 
 const XLogin:FC<IXLogin> = ({onError}) => {
 
+    useTitle("登录")
     const {mutateAsync: login, isLoading} = useLogin()
 
     const onFinish = (data: ILoginForm) => {

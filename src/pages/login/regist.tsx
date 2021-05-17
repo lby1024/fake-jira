@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Input, Form, Button } from "antd";
+import { useTitle } from "hooks/use-title";
 import React, { FC } from "react";
 import { useRegist } from "tools/user";
 
@@ -15,6 +16,7 @@ interface IXRegist {
 
 const XRegist:FC<IXRegist> = ({onError}) => {
 
+    useTitle("注册")
     const {mutateAsync: regist, isLoading} = useRegist()
 
     const onFinish = ({cpassword, ...data}: IRegistForm) => {
