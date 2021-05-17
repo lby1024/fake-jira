@@ -1,8 +1,9 @@
 import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
-import { useMutation, useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { API } from "./api"
+import { useEditConfig } from "./list-config"
 import { queryKey } from "./react-query"
 import { useHttp } from "./request"
 
@@ -48,6 +49,14 @@ export const useProjects = () => {
 }
 
 export const useEditProject = () => {
-
-    return {}
+    const { params } = useProjectsParam()
+    const key = [queryKey.projects, params]
+    const http = useHttp()
+    async function editProject(project: Partial<IProject>) {
+        return await http(`${API.projects}/${project.id}`, {
+            method: "PATCH",
+            data: project,
+        })
+    }
+    return useMutation(editProject, useEditConfig(key))
 }

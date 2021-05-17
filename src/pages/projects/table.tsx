@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Spin, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
 import { FC, useEffect, useMemo } from "react";
@@ -9,7 +9,7 @@ import XSaveProject from "./save";
 
 const XTableProjects:FC = () => {
 
-    const { data: projects } = useProjects()
+    const { data: projects, isLoading } = useProjects()
     const { data: users } = useUsers()
 
     const dataSource = useMemo(() => {
@@ -22,11 +22,11 @@ const XTableProjects:FC = () => {
 
     const Columns: ColumnsType<any> = [
         {
-            title: "收藏",
-            dataIndex: "save",
-            key: "save",
-            render() {
-                return <XSaveProject isSave={true} />
+            title: <XSaveProject project={{pin: true}} />,
+            dataIndex: "pin",
+            key: "pin",
+            render(value, project) {
+                return <XSaveProject project={project} />
             }
         },{
             title: "项目名称",
@@ -61,7 +61,7 @@ const XTableProjects:FC = () => {
         }
     ]
 
-    return <Table columns={Columns} dataSource={dataSource} pagination={false} />
+    return <Table columns={Columns} dataSource={dataSource} pagination={false} loading={isLoading} />
 }
 
 export default XTableProjects

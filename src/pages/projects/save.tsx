@@ -1,20 +1,24 @@
 import { Rate } from "antd";
 import { FC, useMemo, useState } from "react";
+import { IProject, useEditProject } from "tools/project";
 
 interface IXSaveProject {
-    isSave: boolean;
+    project: Partial<IProject>
 }
 
-const XSaveProject:FC<IXSaveProject> = ({isSave}) => {
+const XSaveProject:FC<IXSaveProject> = ({project}) => {
 
-    const [save, setSave] = useState(isSave)
+    const { mutateAsync: saveProject } = useEditProject()
 
     const value = useMemo(() => {
-        return save ? 1 : 0
-    }, [save])
+        return project.pin ? 1 : 0
+    }, [project.pin])
 
     function onTap(v: number) {
-        console.log(v)
+        saveProject({
+            id: project.id,
+            pin: !!v
+        })
     }
 
     return <Rate value={value} count={1} onChange={onTap} />
