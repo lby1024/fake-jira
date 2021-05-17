@@ -59,7 +59,7 @@ export function useHttp() {
     const queryClient = useQueryClient()
     const userInfo = queryClient.getQueryData<IUser>(queryKey.userInfo)
 
-    return (api:string, cfg: IConfig) => request(api, {
+    return (api:string, cfg?: IConfig) => request(api, {
         ...cfg,
         token: userInfo?.token
     })

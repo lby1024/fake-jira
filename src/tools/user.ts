@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query"
 import { API, ILogin, IRegist } from "./api"
 import { getToken, localStorageKey, saveToken } from "./localstorage"
 import { queryKey } from "./react-query"
-import { request } from "./request"
+import { request, useHttp } from "./request"
 
 export interface IUser {
     id: number;
@@ -61,4 +61,12 @@ export function useLogin() {
     return useMutation(login, {
         onSuccess: () => client.invalidateQueries(queryKey.userInfo)
     })
+}
+
+export function useUsers() {
+    const http = useHttp()
+    async function getUsers() { 
+        return await http(API.users)
+    }
+    return useQuery<IUser[]>(queryKey.users, getUsers)
 }

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import { cleanObj } from "tools/utils"
 
-export function useParams<KEY extends string>(keys: KEY[]) {
+export function useUrlParams<KEY extends string>(keys: KEY[]) {
     const [searchParams, setSearchParams] = useSearchParams()
     type paramType = {[x in KEY]: string}
     type InputParam = {[x in KEY]: any}
@@ -13,7 +13,7 @@ export function useParams<KEY extends string>(keys: KEY[]) {
             if(value) p[key] = value
             return p
         }, {} as paramType)
-    }, [keys])
+    }, [keys, searchParams])
 
     const setParams = (p: InputParam) => {
         const o = cleanObj({

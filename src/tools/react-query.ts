@@ -1,3 +1,5 @@
 export enum queryKey {
-    userInfo = 'userInfo'
+    userInfo = 'userInfo',
+    projects = "projects",
+    users = "users",
 }
