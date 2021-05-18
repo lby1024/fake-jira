@@ -1,9 +1,9 @@
 import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
-import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import { API } from "./api"
-import { useEditConfig } from "./list-config"
+import { useAddConfig, useEditConfig } from "./list-config"
 import { queryKey } from "./react-query"
 import { useHttp } from "./request"
 
@@ -47,11 +47,14 @@ export const useProjects = () => {
 
     return useQuery<IProject[]>([queryKey.projects, params], getProjects)
 }
-
+/**
+ * 编辑project
+ */
 export const useEditProject = () => {
     const { params } = useProjectsParam()
     const key = [queryKey.projects, params]
     const http = useHttp()
+
     async function editProject(project: Partial<IProject>) {
         return await http(`${API.projects}/${project.id}`, {
             method: "PATCH",
@@ -59,4 +62,20 @@ export const useEditProject = () => {
         })
     }
     return useMutation(editProject, useEditConfig(key))
+}
+/**
+ * 添加project
+ */
+export function useAddProject() {
+    const { params } = useProjectsParam()
+    const key = [queryKey.projects, params]
+    const http = useHttp()
+
+    async function addProject(params: Partial<IProject>) {
+        return await http(API.projects, {
+            method: "POST",
+            data: params
+        })
+    }
+    return useMutation(addProject, useAddConfig(key))
 }

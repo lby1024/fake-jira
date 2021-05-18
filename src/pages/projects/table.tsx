@@ -16,7 +16,7 @@ const XTableProjects:FC = () => {
         if(!projects) return []
         return projects.map(item => ({
             ...item,
-            key: item.id
+            key: item.id || +new Date()
         }))
     }, [projects])
 
