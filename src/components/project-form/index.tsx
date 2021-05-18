@@ -4,29 +4,25 @@ import { useForm } from "antd/lib/form/Form";
 import XUserSelect from "components/select/user-select";
 import React, { FC, useState } from "react";
 import AlertModel from "tools/alert";
-import { IProject, useAddProject } from "tools/project";
+import { IProject, useAddProject, useEditProject } from "tools/project";
 
 const XProjectForm:FC  = () => {
 
-    const [ visible, setVisible ] = useState(false)
-    const { mutateAsync: addProject } = useAddProject()
-    const [ type, setType ] = useState<"add"|"edit">("add")
     const [ form ] = useForm()
+    const [ visible, setVisible ] = useState(false)
+    const [param, setParam] = useState<Partial<IProject>>()
+    const mutate = param ? useEditProject : useAddProject
+    const { mutateAsync, isLoading } = mutate()
 
     AlertModel.projectForm = async (param?: Partial<IProject>) => {
         setVisible(!visible)
-        
+        if(!param?.id) return
+        setParam(param)
+        form.setFieldsValue(param)
     }
 
     function onFinish(data: any) {
-        console.log(data)
-        if(type === "add") add(data)
-
-    }
-
-    function add(data: any) {
-        addProject(data)
-        close()
+        mutateAsync({...param, ...data}).then(() => close())
     }
 
     function close() {
@@ -54,7 +50,7 @@ const XProjectForm:FC  = () => {
             </Form.Item>
 
             <Form.Item className="submit" >
-                <Button type="primary" htmlType="submit" >提交</Button>
+                <Button type="primary" htmlType="submit" loading={isLoading} >提交</Button>
             </Form.Item>
         </Form>
     </Content>

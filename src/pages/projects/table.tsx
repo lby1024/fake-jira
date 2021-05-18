@@ -49,14 +49,15 @@ const XTableProjects:FC = () => {
             dataIndex: "created",
             key: "created",
             render(value) {
-                return value ? dayjs(value).format("YYYY-MM-DD") : "无"
+                const time = value || new Date()
+                return dayjs(time).format("YYYY-MM-DD")
             }
         },{
             title: "编辑",
             dataIndex: "edit",
             key: "edit",
-            render() {
-                return <XProjectMore />
+            render(value, project) {
+                return <XProjectMore project={project} />
             }
         }
     ]

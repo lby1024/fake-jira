@@ -3,7 +3,7 @@ import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
 import { useMutation, useQuery } from "react-query"
 import { API } from "./api"
-import { useAddConfig, useEditConfig } from "./list-config"
+import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
 import { queryKey } from "./react-query"
 import { useHttp } from "./request"
 
@@ -78,4 +78,19 @@ export function useAddProject() {
         })
     }
     return useMutation(addProject, useAddConfig(key))
+}
+/**
+ * 删除project
+ */
+export function useDeleteProject() {
+    const { params } = useProjectsParam()
+    const key = [queryKey.projects, params]
+    const http = useHttp()
+
+    async function deleteProject(params: Partial<IProject>) {
+        return await http(`${API.projects}/${params.id}`, {
+            method: "DELETE"
+        })
+    }
+    return useMutation(deleteProject, useDeleteConfig(key))
 }

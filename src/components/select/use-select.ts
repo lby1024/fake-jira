@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 export function useSelect(options?: {name: string, id: number}[]) {
 
-    const defaultValue = -99
+    const defaultValue = 0
 
     const newOptions = useMemo(() => {
         const defaultOption = {label: "负责人", value: defaultValue}

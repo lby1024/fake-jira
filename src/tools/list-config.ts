@@ -48,6 +48,6 @@ function addList(list: any[], newItem: any) {
 }
 
 function deleteList(list: any[], target: any) {
-    list = list.filter(item => item.id === target.id)
+    list = list.filter(item => item.id !== target.id)
     return [...list]
 }
