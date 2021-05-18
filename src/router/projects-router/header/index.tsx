@@ -8,12 +8,16 @@ const XHeader:FC = () => {
 
     const {data: userInfo} = useUser()
 
+    function toHome() {
+        window.location.pathname = ""
+    }
+
     const UserMenu = <Menu style={{textAlign: "center"}} >
         <Menu.Item key="logout" onClick={logout} >登出</Menu.Item>
     </Menu>
 
     return <Content>
-        <div><Logo/></div>
+        <div onClick={toHome} ><Logo/></div>
         <div>user</div>
         <div>projects</div>
         <div></div>

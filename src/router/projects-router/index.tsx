@@ -3,6 +3,7 @@ import XKanban from "pages/kanban";
 import XProjects from "pages/projects";
 import { FC } from "react";
 import { Navigate, Route, Routes } from "react-router";
+import XTaskRouter from "router/tasks-router";
 import XHeader from "./header";
 
 const XProjectsRouter: FC = () => {
@@ -10,7 +11,7 @@ const XProjectsRouter: FC = () => {
         <XHeader />
         <Routes>
             <Route path="/projects" element={<XProjects />} />
-            <Route path="/projects/:id/*" element={<XKanban />} />
+            <Route path="/projects/:id/*" element={<XTaskRouter />} />
             <Navigate to="/projects" replace={true} />
         </Routes>
     </Content>

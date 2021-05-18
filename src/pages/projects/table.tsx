@@ -1,7 +1,9 @@
+import { render } from "@testing-library/react";
 import { Spin, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
-import { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { IProject, useProjects } from "tools/project";
 import { useUsers } from "tools/user";
 import XProjectMore from "./project-more";
@@ -31,7 +33,10 @@ const XTableProjects:FC = () => {
         },{
             title: "项目名称",
             dataIndex: "name",
-            key: "name"
+            key: "name",
+            render(value, project) {
+                return <Link to={`/projects/${Number(project.id)}`} >{value}</Link>
+            }
         },{
             title: "部门",
             dataIndex: "organization",
