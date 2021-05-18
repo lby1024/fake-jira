@@ -60,10 +60,12 @@ export function useEditProject(queryKey: QueryKey) {
 export function useAddProject(queryKey: QueryKey) {
     const client = useHttp()
 
-    const add = (params: Partial<IProject>) => client(EQueryKey.projects, {
-        data: params,
-        method: 'POST',
-    })
+    const add = (params: Partial<IProject>) => {
+        return client(EQueryKey.projects, {
+            data: params,
+            method: 'POST',
+        })
+    }
 
     return useMutation(add, useAddConfig(queryKey))
 }

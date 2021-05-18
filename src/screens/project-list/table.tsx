@@ -69,7 +69,10 @@ const XList: FC<ListProps> = ({list, users, ...props}) => {
     ]
 
     const dataSource = useMemo(() => {
-        return list.map(item => ({key: item.id, ...item}))
+        return list.map(item => ({
+            ...item,
+            key: item.id || +new Date(), 
+        }))
     }, [list])
 
     return <div>
