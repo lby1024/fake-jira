@@ -14,7 +14,7 @@ const XTaskRouter:FC = () => {
             <XMenu/>
         </Sider>
 
-        <Content>
+        <Content className="content">
             <Routes>
                 <Route path='/kanban' element={<XKanban/>} />
                 <Route path='/epic' element={<XEpic/>} />
@@ -27,5 +27,8 @@ const XTaskRouter:FC = () => {
 export default XTaskRouter
 
 const XLayout = styled(Layout)`
-    height: calc(100vh - 6rem)
+    height: calc(100vh - 6rem);
+    .content {
+        background-color: #fff;
+    }
 `
