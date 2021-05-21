@@ -58,7 +58,7 @@ export const useProject = (id?: number) => {
         return await http(`${API.projects}/${id}`)
     }
     return useQuery<IProject>([queryKey.project, {id}], getProject, {
-        enabled: !!id
+        enabled: !!id,
     })
 }
 /**

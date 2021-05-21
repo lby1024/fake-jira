@@ -5,7 +5,7 @@ import { queryKey } from "tools/react-query";
 import { useHttp } from "tools/request";
 import { API } from "tools/api";
 import { IKanban } from "tools/kanban";
-import { useAddConfig } from "tools/list-config";
+import { useAddConfig, useDeleteConfig } from "tools/list-config";
 /**
  * 获取路由中的projectId
  */
@@ -19,7 +19,7 @@ export function useProjectIdInUrl() {
  */
 export function useKanbansKey() {
     const projectId = useProjectIdInUrl()
-    return [queryKey.kanbans, {id: projectId}]
+    return [queryKey.kanbans, {projectId: projectId}]
 }
 /**
  * 获取projectInfo
@@ -53,4 +53,14 @@ export function useAddKanban() {
         })
     }
     return useMutation(addKanban, useAddConfig(kanbansKey))
+}
+export function useDeleteKanban() {
+    const http = useHttp()
+    const kanbansKey = useKanbansKey()
+    function deleteKanban(param: Partial<IKanban>) {
+        return http(`${API.kanbans}/${param.id}`, {
+            method: "DELETE"
+        })
+    }
+    return useMutation(deleteKanban, useDeleteConfig(kanbansKey))
 }

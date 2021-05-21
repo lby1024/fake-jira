@@ -13,7 +13,7 @@ const XKanbanColumn:FC<IXKanbanColumn> = ({kanban}) => {
     return <Content>
         <XRow between={true} >
             <h3>{kanban.name}</h3>
-            <XKanbanMore />
+            <XKanbanMore kanban={kanban} />
         </XRow>
     </Content>
 }
