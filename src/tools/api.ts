@@ -4,6 +4,7 @@ export enum API {
     register = 'register', // 注册    
     projects = 'projects', // 项目列表
     users = "users",    // 获取人员列表
+    kanbans = "kanbans", // 
 }
 
 export interface ILogin {

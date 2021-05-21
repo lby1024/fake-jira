@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Layout } from "antd";
-import XEpic from "pages/>epic";
+import { useTitle } from "hooks/use-title";
+import XEpic from "pages/epic";
 import XKanban from "pages/kanban";
 import React, { FC } from "react";
 import { Navigate, Route, Routes } from "react-router";
@@ -9,6 +10,9 @@ import XMenu from "./menu";
 const { Sider, Content } = Layout
 
 const XTaskRouter:FC = () => {
+
+    useTitle("项目管理")
+    
     return <XLayout>
         <Sider theme="light" >
             <XMenu/>
@@ -30,5 +34,6 @@ const XLayout = styled(Layout)`
     height: calc(100vh - 6rem);
     .content {
         background-color: #fff;
+        overflow: hidden;
     }
 `

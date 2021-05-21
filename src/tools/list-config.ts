@@ -43,7 +43,9 @@ function editList(list: any[], newItem: any) {
     return [...list]
 }
 
-function addList(list: any[], newItem: any) {
+function addList(list: any[], item: any) {
+    const newItem = {...item}
+    newItem.id = newItem.id || +new Date()
     return [...list, newItem]
 }
 

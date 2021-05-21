@@ -2,6 +2,7 @@ import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
 import { useMutation, useQuery } from "react-query"
+import { useLocation } from "react-router"
 import { API } from "./api"
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
 import { queryKey } from "./react-query"
@@ -46,6 +47,19 @@ export const useProjects = () => {
     }
 
     return useQuery<IProject[]>([queryKey.projects, params], getProjects)
+}
+/**
+ * 获取项目详情
+ */
+export const useProject = (id?: number) => {
+    const http = useHttp()
+
+    async function getProject() {
+        return await http(`${API.projects}/${id}`)
+    }
+    return useQuery<IProject>([queryKey.project, {id}], getProject, {
+        enabled: !!id
+    })
 }
 /**
  * 编辑project

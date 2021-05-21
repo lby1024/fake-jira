@@ -15,7 +15,7 @@ const XLoading: FC<IXLoading> = ({className}) => {
 export default XLoading
 
 const Content = styled.div`
-    width: 1oovw;
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
