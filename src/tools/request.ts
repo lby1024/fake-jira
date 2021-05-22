@@ -12,15 +12,16 @@ interface IConfig extends RequestInit {
 }
 
 export async function request(api: string, cfg: IConfig = {} ) {
+    
     const config = getConfig(cfg)
-
+    
     if(config.method.toUpperCase() === 'GET') {
         const params = qs.stringify(cfg.data)
         if(params) api += `?${params}`
     }else {
         config.body = JSON.stringify(cfg.data || {})
     }
-
+    
     const res = await window.fetch(`${apiUrl}/${api}`, config)
     return await resolveRes(res)
 }

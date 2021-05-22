@@ -4,6 +4,7 @@ import { ITask } from "tools/task";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 import { Card } from "antd";
+import AlertModel from "tools/alert";
 
 interface IXTaskCard {
     task: ITask
@@ -16,7 +17,7 @@ const XTaskCard:FC<IXTaskCard> = ({ task }) => {
         return taskIcon
     }, [task])
 
-    return <Content>
+    return <Content onClick={() => AlertModel.taskForm(task)} >
         <h3>{task.name}</h3>
         <img src={icon} alt="icon" />
     </Content>

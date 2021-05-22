@@ -6,6 +6,7 @@ export enum API {
     users = "users",    // 获取人员列表
     kanbans = "kanbans", //
     tasks = "tasks", 
+    taskTypes = "taskTypes",
 }
 
 export interface ILogin {

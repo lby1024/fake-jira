@@ -2,6 +2,7 @@ import { useTasksKey } from "pages/kanban/utils-task"
 import { useMutation, useQuery } from "react-query"
 import { API, IGetTasks } from "./api"
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
+import { queryKey } from "./react-query"
 import { useHttp } from "./request"
 
 export interface ITask {
@@ -50,10 +51,11 @@ export function useEditTask() {
     const http = useHttp()
     const key = useTasksKey()
     async function editTask(params: Partial<ITask>) {
-        return await http(`${API.tasks}/${params.id}`, {
+        const res = await http(`${API.tasks}/${params.id}`, {
             method: "PATCH",
             data: params
         })
+        return res
     }
     return useMutation(editTask, useEditConfig(key))
 }
@@ -69,4 +71,14 @@ export function  useDeleteTask() {
         })
     }
     return useMutation(deleteTask, useDeleteConfig(key))
+}
+/**
+ * 获取tasks types
+ */
+export function  useTaskTypes() {
+    const http = useHttp()
+    async function getTaskTypes() {
+        return await http(API.taskTypes)
+    }
+    return useQuery([queryKey.taskTypes], getTaskTypes)
 }

@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
-export function useSelect(options?: {name: string, id: number}[]) {
+export function useSelect(options?: {name: string, id: number}[], defaultlabel="负责人") {
 
     const defaultValue = 0
 
     const newOptions = useMemo(() => {
-        const defaultOption = {label: "负责人", value: defaultValue}
+        const defaultOption = {label: defaultlabel, value: defaultValue}
         if(!options) return [defaultOption]
         const arr = options?.map(user => ({
             label: user.name,
@@ -17,8 +17,5 @@ export function useSelect(options?: {name: string, id: number}[]) {
     return {
         options: newOptions,
         defaultValue,
-        style: {
-            textAlign: "left"
-        }
     }
 }

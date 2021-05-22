@@ -8,12 +8,14 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import XProjectForm from 'components/project-form';
+import XTaskForm from 'components/task-form';
 
 const Content: FC = ({children}) => {
   return <QueryClientProvider client={new QueryClient()} >
     <BrowserRouter>
       {children}
       <XProjectForm />
+      <XTaskForm />
     </BrowserRouter>
   </QueryClientProvider>
 }
