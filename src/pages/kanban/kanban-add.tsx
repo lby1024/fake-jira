@@ -1,7 +1,8 @@
 import { Content } from "./kanban-column";
 import { FC, useState } from "react";
 import { Input } from "antd";
-import { useAddKanban, useProjectIdInUrl } from "./utils";
+import { useAddKanban } from "./utils-kanban";
+import { useProjectIdInUrl } from "./utils";
 
 interface IXKanbanAdd {
 

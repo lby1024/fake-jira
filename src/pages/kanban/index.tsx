@@ -1,9 +1,14 @@
 import styled from "@emotion/styled";
 import XLoading from "components/loading";
 import { FC } from "react";
+import { IKanban } from "tools/kanban";
 import XKanbanAdd from "./kanban-add";
 import XKanbanColumn from "./kanban-column";
-import { useKanbans, useProjectInUrl } from "./utils";
+import { useKanbans, useProjectInUrl } from "./utils-kanban";
+
+interface IXKanban {
+    kanban: IKanban
+}
 
 const XKanban:FC = () => {
 

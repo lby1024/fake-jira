@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { XRow } from "components/row";
 import { FC } from "react";
 import { IKanban } from "tools/kanban";
+import { useTasks } from "tools/task";
 import XKanbanMore from "./kanban-more";
+import XTaskCard from "./task-card";
 
 interface IXKanbanColumn {
     kanban: IKanban
@@ -10,11 +12,19 @@ interface IXKanbanColumn {
 
 const XKanbanColumn:FC<IXKanbanColumn> = ({kanban}) => {
 
+    const { data: tasks } = useTasks()
+    const filterTasks = tasks?.filter(task => task.kanbanId === kanban.id)
+
     return <Content>
         <XRow between={true} >
             <h3>{kanban.name}</h3>
             <XKanbanMore kanban={kanban} />
         </XRow>
+        <div>
+            {
+                filterTasks?.map(task => <XTaskCard task={task} />)
+            }
+        </div>
     </Content>
 }
 

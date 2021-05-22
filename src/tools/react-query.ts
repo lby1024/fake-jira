@@ -5,4 +5,5 @@ export enum queryKey {
     users = "users",
     kanbans = "kanbans",
     kanban = "kanban",
+    tasks = "tasks",
 }
