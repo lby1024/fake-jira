@@ -15,7 +15,7 @@ export function useUrlParams<KEY extends string>(keys: KEY[]) {
         }, {} as paramType)
     }, [keys, searchParams])
 
-    const setParams = (p: InputParam) => {
+    const setParams = (p: Partial<InputParam>) => {
         const o = cleanObj({
             ...params,
             ...p

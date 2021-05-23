@@ -1,3 +1,4 @@
+import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
 import { queryKey } from "tools/react-query"
@@ -5,17 +6,18 @@ import { useProjectIdInUrl } from "./utils"
 
 export function useTasksParam() {
     const {params, setParams} = useUrlParams(["name", "processorId", "typeId", "tagId"])
+    const debounceParam = useDebounce(params)
     const projectId = useProjectIdInUrl()
 
     const data = useMemo(() => {
         return {
-            ...params,
+            ...debounceParam,
             projectId,
-            processorId: Number(params.processorId) || undefined,
-            typeId: Number(params.typeId) || undefined,
-            tagId: Number(params.tagId) || undefined,
+            processorId: Number(debounceParam.processorId) || undefined,
+            typeId: Number(debounceParam.typeId) || undefined,
+            tagId: Number(debounceParam.tagId) || undefined,
         }
-    }, [params, projectId])
+    }, [debounceParam, projectId])
 
     function reset() {
         setParams({
