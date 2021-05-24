@@ -2,7 +2,6 @@ import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
 import { useMemo } from "react"
 import { useMutation, useQuery } from "react-query"
-import { useLocation } from "react-router"
 import { API } from "./api"
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
 import { queryKey } from "./react-query"
@@ -21,11 +20,12 @@ export interface IProject {
  */
 export function useProjectsParam() {
     const { params, setParams } = useUrlParams(["name", "personId"])
-    const debounceParam = useDebounce(params)
     const newParam = useMemo(() => ({
         ...params,
         personId: Number(params.personId) || undefined
-    }), [debounceParam])
+    }), [params])
+    
+    // const debounceParam = useDebounce(newParam)
 
     return {
         params: newParam,

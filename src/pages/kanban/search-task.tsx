@@ -13,11 +13,16 @@ interface IXSearchTask {
 const XSearchTask:FC<IXSearchTask> = () => {
 
     const { params, setParams, reset } = useTasksParam()
+
+    const onChange = (name: string) => {
+        setParams({name})
+    }
+    
     return <Content gap={1} marginBottom={2} >
         <Input 
             className="input" 
             value={params.name}
-            onChange={e => setParams({name: e.target.value})}
+            onChange={e => onChange(e.target.value)}
         />
         <XUserSelect 
             value={params.processorId}

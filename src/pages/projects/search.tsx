@@ -8,10 +8,10 @@ const XSearch:FC = () => {
 
     const { params, setParams } = useProjectsParam()
 
-    const onName = (e: any) => {
+    const onName = (name: string) => {
         setParams({
             ...params,
-            name: e.target.value
+            name
         })        
     }
 
@@ -24,7 +24,7 @@ const XSearch:FC = () => {
 
     return <Content layout="inline" >
         <Form.Item>
-            <Input type="text" placeholder="项目名" value={params.name} onChange={onName} />
+            <Input type="text" placeholder="项目名" value={params.name} onChange={e => onName(e.target.value)} />
         </Form.Item>
 
         <Form.Item>

@@ -6,18 +6,18 @@ import { useProjectIdInUrl } from "./utils"
 
 export function useTasksParam() {
     const {params, setParams} = useUrlParams(["name", "processorId", "typeId", "tagId"])
-    const debounceParam = useDebounce(params)
+    // const debounceParam = useDebounce({name: 'a'})
     const projectId = useProjectIdInUrl()
 
     const data = useMemo(() => {
         return {
-            ...debounceParam,
+            ...params,
             projectId,
-            processorId: Number(debounceParam.processorId) || undefined,
-            typeId: Number(debounceParam.typeId) || undefined,
-            tagId: Number(debounceParam.tagId) || undefined,
+            processorId: Number(params.processorId) || undefined,
+            typeId: Number(params.typeId) || undefined,
+            tagId: Number(params.tagId) || undefined,
         }
-    }, [debounceParam, projectId])
+    }, [params, projectId])
 
     function reset() {
         setParams({
@@ -37,5 +37,10 @@ export function useTasksParam() {
 
 export function useTasksKey() {
     const {params} = useTasksParam()
-    return [queryKey.tasks, params]
+
+    const key = useMemo(() => {
+        return [queryKey.tasks, params]
+    }, [params])
+
+    return key
 }

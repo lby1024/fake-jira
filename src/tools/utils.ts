@@ -18,3 +18,13 @@
      })
      return res
  }
+
+ export function debounce(callback: (data?: any) => void, delay=100) {
+    let timer: any = null
+     return function fn(...args: any[]) {
+        if(timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+            callback(args)
+        }, delay);
+     }
+ }

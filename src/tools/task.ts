@@ -24,9 +24,10 @@ export interface ITask {
  export function useTasks() {
     const http = useHttp()
     const key = useTasksKey()
-    const data = key[1] as IGetTasks
-    function getTasks() {
-        return http(API.tasks, { data })
+    const data = key[1] as any
+    async function getTasks() {
+        const res = await http(API.tasks, {data})
+        return res
     }
     return useQuery<ITask[]>(key, getTasks)
 }
@@ -50,6 +51,7 @@ export function useAddTask() {
 export function useEditTask() {
     const http = useHttp()
     const key = useTasksKey()
+    
     async function editTask(params: Partial<ITask>) {
         const res = await http(`${API.tasks}/${params.id}`, {
             method: "PATCH",
