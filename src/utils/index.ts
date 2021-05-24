@@ -28,7 +28,10 @@ export const cleanObj = (obj?: object) => {
 export const useDebounce = <V>(value: V, delay=200) => {
     const [debouncedValue, setDebouncedValue] = useState(value)
     useEffect(() => {
-        const timer = setTimeout(() => setDebouncedValue(value), delay)
+        const timer = setTimeout(() => {
+            setDebouncedValue(value)
+            console.log(+new Date(), '------ iii');
+        }, delay)
         return () => clearTimeout(timer)
     }, [value])
 
