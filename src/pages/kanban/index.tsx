@@ -14,7 +14,7 @@ const XKanban:FC = () => {
     const {isLoading: taskLoading} = useTasks()
     const loading = projectLoading || taskLoading
     const { data: kanbans } = useKanbans()
-    
+
     return <Content>
         <h1 className="title">{project?.name}看板</h1>
         <XSearchTask />

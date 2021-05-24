@@ -6,7 +6,6 @@ import { useProjectIdInUrl } from "./utils"
 
 export function useTasksParam() {
     const {params, setParams} = useUrlParams(["name", "processorId", "typeId", "tagId"])
-    // const debounceParam = useDebounce({name: 'a'})
     const projectId = useProjectIdInUrl()
 
     const data = useMemo(() => {
@@ -19,6 +18,8 @@ export function useTasksParam() {
         }
     }, [params, projectId])
 
+    const debounceParam = useDebounce(data)
+
     function reset() {
         setParams({
             name: undefined,
@@ -29,7 +30,7 @@ export function useTasksParam() {
     }
 
     return {
-        params: data,
+        params: debounceParam,
         setParams,
         reset,
     }

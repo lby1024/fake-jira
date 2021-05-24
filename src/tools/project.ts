@@ -1,6 +1,6 @@
 import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useMutation, useQuery } from "react-query"
 import { API } from "./api"
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
@@ -25,10 +25,10 @@ export function useProjectsParam() {
         personId: Number(params.personId) || undefined
     }), [params])
     
-    // const debounceParam = useDebounce(newParam)
+    const debounceParam = useDebounce(newParam)
 
     return {
-        params: newParam,
+        params: debounceParam,
         setParams
     }
 }

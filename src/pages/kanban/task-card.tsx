@@ -15,7 +15,7 @@ interface IXTaskCard {
 const XTaskCard:FC<IXTaskCard> = ({ task }) => {
 
     const {params} = useTasksParam()
-    
+
     const icon = useMemo(() => {
         if(task?.typeId === 2) return bugIcon
         return taskIcon
