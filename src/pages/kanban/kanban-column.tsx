@@ -6,18 +6,20 @@ import { useTasks } from "tools/task";
 import XKanbanMore from "./kanban-more";
 import XAddTask from "./task-add";
 import XTaskCard from "./task-card";
+import { DraggableProvided } from "react-beautiful-dnd";
 
 interface IXKanbanColumn {
     kanban: IKanban
+    provided?: DraggableProvided;
 }
 
-const XKanbanColumn:FC<IXKanbanColumn> = ({kanban}) => {
+const XKanbanColumn:FC<IXKanbanColumn> = ({kanban, provided}) => {
 
     const { data: tasks } = useTasks()
     const filterTasks = tasks?.filter(task => task.kanbanId === kanban.id)
 
     return <Content>
-        <XRow between={true} >
+        <XRow between={true} {...provided?.dragHandleProps} >
             <h3>{kanban.name}</h3>
             <XKanbanMore kanban={kanban} />
         </XRow>

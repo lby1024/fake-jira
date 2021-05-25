@@ -1,8 +1,8 @@
 import { useProject } from "tools/project"
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { queryKey } from "tools/react-query";
 import { useHttp } from "tools/request";
-import { API } from "tools/api";
+import { API, ISort } from "tools/api";
 import { IKanban } from "tools/kanban";
 import { useAddConfig, useDeleteConfig } from "tools/list-config";
 import { useProjectIdInUrl } from "./utils";
@@ -58,4 +58,47 @@ export function useDeleteKanban() {
         })
     }
     return useMutation(deleteKanban, useDeleteConfig(kanbansKey))
+}
+/**
+ * 排序看板
+ */
+export function useReorderKanban() {
+    const http = useHttp()
+    const kanbansKey = useKanbansKey()
+    const queryClient = useQueryClient()
+    async function reorderKanban(params:ISort) {
+        const res = await http(API.kanbansReorder, {
+            data: params,
+            method: "POST"
+        })
+        return res
+    }
+    return useMutation(reorderKanban, {
+        onMutate(params: ISort) {
+            const preKanbans = queryClient.getQueryData(kanbansKey) as IKanban[]
+            const newKanbans = sortKanban(preKanbans, params)
+            queryClient.setQueryData(kanbansKey, newKanbans)
+            return preKanbans
+        },
+        onSuccess() {
+            queryClient.invalidateQueries(kanbansKey)
+        },
+        onError(err: Error, param: any, preDate: any) {
+            queryClient.setQueryData(kanbansKey, preDate)
+        }
+    })
+}
+/**
+ * 重新排序kanban
+ */
+function sortKanban(kanbans: IKanban[], params: ISort) {
+    kanbans = [...kanbans]
+    const kanbanIds = kanbans.map(item => item.id)
+    const fromIndex = kanbanIds.indexOf(params.fromId)
+    const toIndex = kanbanIds.indexOf(params.referenceId)
+    const from = kanbans[fromIndex]
+    const to = kanbans[toIndex]
+    kanbans[fromIndex] = to
+    kanbans[toIndex] = from
+    return kanbans
 }
