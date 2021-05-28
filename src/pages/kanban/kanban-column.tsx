@@ -22,7 +22,7 @@ const XKanbanColumn:FC<IXKanbanColumn> = ({kanban, provided}) => {
 
     return <Content>
         <XRow between={true} {...provided?.dragHandleProps} >
-            <h3>{kanban.name}---{kanban.id}</h3>
+            <h3>{kanban.name}</h3>
             <XKanbanMore kanban={kanban} />
         </XRow>
         <div className="drop-content" >

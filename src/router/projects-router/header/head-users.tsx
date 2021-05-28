@@ -10,7 +10,7 @@ const XHeadUsers:FC = () => {
     const CONTEENT = <Content>
         <Typography.Text type="secondary" >组员列表</Typography.Text>
         <List>
-            {users?.map(user => <List.Item>{user.name}</List.Item>)}
+            {users?.map(user => <List.Item key={user.id} >{user.name}</List.Item>)}
         </List>
     </Content>
 

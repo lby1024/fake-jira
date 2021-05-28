@@ -9,6 +9,7 @@ export enum API {
     tasks = "tasks", 
     taskTypes = "taskTypes",
     tasksReorder = "tasks/reorder",
+    epics = "epics",
 }
 
 export interface ILogin {
