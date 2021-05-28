@@ -2,11 +2,13 @@ import styled from "@emotion/styled"
 import { FC } from "react"
 import {ReactComponent as Logo} from "assets/logo.svg"
 import { Dropdown, Menu } from "antd"
-import { logout, useUser } from "tools/user"
+import { logout, useUser, useUsers } from "tools/user"
+import XHeadUsers from "./head-users"
 
 const XHeader:FC = () => {
 
     const {data: userInfo} = useUser()
+    const {data: users} = useUsers()
 
     function toHome() {
         window.location.pathname = ""
@@ -18,9 +20,15 @@ const XHeader:FC = () => {
 
     return <Content>
         <div onClick={toHome} ><Logo/></div>
-        <div>user</div>
-        <div>projects</div>
+
+        <Dropdown overlay={UserMenu} placement="bottomCenter" arrow >
+            <span>项目</span>
+        </Dropdown>
+
+        <XHeadUsers />
+
         <div></div>
+
         <Dropdown overlay={UserMenu} placement="bottomCenter" arrow >
             <span>Hi, {userInfo?.name}</span>
         </Dropdown>
