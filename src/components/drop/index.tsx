@@ -2,16 +2,22 @@ import styled from "@emotion/styled";
 import React, { FC, ReactNode } from "react";
 import { Droppable, DroppableProps } from "react-beautiful-dnd";
 
-const Content = styled.div<{ isDraggingOver: boolean }>`
-  background-color: ${(props) => (props.isDraggingOver ? "#fff" : "#fff")};
+const Content = styled.div<{
+  isDraggingOver: boolean,
+  bg: string,
+  hoverBg: string,
+}>`
+  background-color: ${(props) => (props.isDraggingOver ? props.hoverBg : props.bg)};
 `;
 
 interface IXDrop extends Omit<DroppableProps, "children"> {
   children: ReactNode;
   className?: string;
+  bg?: string;
+  hoverBg?: string;
 }
 
-const XDrop: FC<IXDrop> = ({ children, className, ...props }) => {
+const XDrop: FC<IXDrop> = ({ children, className, bg, hoverBg, ...props }) => {
   return (
     <Droppable {...props}>
       {(provided, snapshot) => (
@@ -20,6 +26,8 @@ const XDrop: FC<IXDrop> = ({ children, className, ...props }) => {
           ref={provided.innerRef}
           className={className}
           isDraggingOver={snapshot.isDraggingOver}
+          bg={bg || "#fff"}
+          hoverBg={hoverBg || "#f7f7f7"}
         >
           {children}
           {provided.placeholder}

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import XLoading from "components/loading";
-import React, { FC, useEffect } from "react";
+import { FC } from "react";
 import { IKanban } from "tools/kanban";
 import { useTasks } from "tools/task";
 import XKanbanAdd from "./kanban-add";
@@ -10,14 +10,16 @@ import { useKanbans, useProjectInUrl, useReorderKanban } from "./utils-kanban";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import XDrop from "components/drop";
 import XDrag from "components/drag";
+import { getTypeTask, useReorderTask } from "./utils-task";
 
 const XKanban:FC = () => {
 
     const { data: project, isLoading: projectLoading } = useProjectInUrl()
-    const {isLoading: taskLoading} = useTasks()
+    const { data: tasks, isLoading: taskLoading} = useTasks()
     const loading = projectLoading || taskLoading
     const { data: kanbans } = useKanbans()
     const { mutateAsync: reorderKanban } = useReorderKanban()
+    const { mutateAsync: reorderTask } = useReorderTask()
     /**
      * 
      * source: 起点
@@ -26,21 +28,34 @@ const XKanban:FC = () => {
      */
     function onDragEnd(e: DropResult) {
         const { source, destination, draggableId, type } = e
-        // console.log(source, '--- source');
-        // console.log(destination, '--- destination');
-        // console.log(draggableId, '--- draggableId');
-        // console.log(type, '--- type');
-        if(!kanbans || !destination) return
+        if(!kanbans || !destination || !tasks) return
         if(type === "column") {
             const from: IKanban = kanbans[source.index]
             const reference: IKanban = kanbans[destination.index]
             reorderKanban({
                 fromId: from.id,
                 referenceId: reference.id,
-                type: source.index > destination.index ? "before" : "after"
+                type: source.index < destination.index ? "after" : "before"
             })
         }
-
+        if(type === "task") {
+            const filterTasks = tasks.filter(task => task.kanbanId === Number(destination.droppableId))
+            const reference = filterTasks[destination.index] || filterTasks[destination.index-1]
+            const type = getTypeTask({
+                arr: filterTasks,
+                fromIndex: source.index,
+                fromKanbanId: Number(source.droppableId),
+                toIndex: destination.index,
+                toKanbanId: Number(destination.droppableId),
+            })
+            reorderTask({
+                fromKanbanId: Number(source.droppableId),
+                fromId: Number(draggableId),
+                toKanbanId: Number(destination.droppableId),
+                referenceId: reference.id,
+                type
+            })
+        }
     }
 
     return <Content>
@@ -56,6 +71,7 @@ const XKanban:FC = () => {
                         droppableId="columns-drop"
                         type="column"
                         direction="horizontal"
+                        hoverBg="#fff"
                     >
                         {kanbans?.map((kanban, index) => (
                             <XDrag draggableId={`kanban-${kanban.id}`} index={index} dragAll={false} key={kanban.id} >

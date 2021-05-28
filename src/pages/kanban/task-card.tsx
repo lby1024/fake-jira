@@ -24,6 +24,7 @@ const XTaskCard:FC<IXTaskCard> = ({ task }) => {
     return <Content onClick={() => AlertModel.taskForm(task)} >
         <h3>
             <XHightLight txt={task.name} keyword={params.name} />
+            ---id: {task.id}
         </h3>
         <img src={icon} alt="icon" />
     </Content>
@@ -33,5 +34,4 @@ export default XTaskCard
 
 const Content = styled(Card)`
     margin-bottom: 1rem;
-    
 `

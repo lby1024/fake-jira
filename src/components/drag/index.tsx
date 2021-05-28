@@ -8,7 +8,6 @@ interface IXDrag extends Omit<DraggableProps, "children"> {
 }
 
 const XDrag: FC<IXDrag> = ({ className, children, dragAll, ...props }) => {
-  console.log(React.isValidElement(children));
   if (!React.isValidElement(children)) return <div />;
   return (
     <Draggable {...props}>

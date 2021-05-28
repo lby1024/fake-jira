@@ -5,7 +5,7 @@ import { useHttp } from "tools/request";
 import { API, ISort } from "tools/api";
 import { IKanban } from "tools/kanban";
 import { useAddConfig, useDeleteConfig } from "tools/list-config";
-import { useProjectIdInUrl } from "./utils";
+import { moveIitem, useProjectIdInUrl } from "./utils";
 /**
  * 
  */
@@ -96,9 +96,5 @@ function sortKanban(kanbans: IKanban[], params: ISort) {
     const kanbanIds = kanbans.map(item => item.id)
     const fromIndex = kanbanIds.indexOf(params.fromId)
     const toIndex = kanbanIds.indexOf(params.referenceId)
-    const from = kanbans[fromIndex]
-    const to = kanbans[toIndex]
-    kanbans[fromIndex] = to
-    kanbans[toIndex] = from
-    return kanbans
+    return moveIitem(kanbans, fromIndex, toIndex, params.type)
 }
