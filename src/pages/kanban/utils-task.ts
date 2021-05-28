@@ -56,7 +56,7 @@ export function useReorderTask() {
     const tasksKey = useTasksKey()
     const queryClient = useQueryClient()
     async function reorderTask(params:ISort) {
-        const res = await http(API.kanbansReorder, {
+        const res = await http(API.tasksReorder, {
             data: params,
             method: "POST"
         })
@@ -69,9 +69,9 @@ export function useReorderTask() {
             queryClient.setQueryData(tasksKey, newTasks)
             return preTasks
         },
-        onSuccess() {
-            queryClient.invalidateQueries(tasksKey)
-        },
+        // onSuccess() {
+        //     queryClient.invalidateQueries(tasksKey)
+        // },
         onError(err: Error, param: any, preDate: any) {
             queryClient.setQueryData(tasksKey, preDate)
         }

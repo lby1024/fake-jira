@@ -8,6 +8,7 @@ export enum API {
     kanbansReorder = "kanbans/reorder",
     tasks = "tasks", 
     taskTypes = "taskTypes",
+    tasksReorder = "tasks/reorder",
 }
 
 export interface ILogin {

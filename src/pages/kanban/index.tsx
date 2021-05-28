@@ -52,7 +52,7 @@ const XKanban:FC = () => {
                 fromKanbanId: Number(source.droppableId),
                 fromId: Number(draggableId),
                 toKanbanId: Number(destination.droppableId),
-                referenceId: reference.id,
+                referenceId: reference?.id,
                 type
             })
         }

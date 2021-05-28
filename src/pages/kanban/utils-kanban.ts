@@ -80,9 +80,9 @@ export function useReorderKanban() {
             queryClient.setQueryData(kanbansKey, newKanbans)
             return preKanbans
         },
-        onSuccess() {
-            queryClient.invalidateQueries(kanbansKey)
-        },
+        // onSuccess() {
+        //     queryClient.invalidateQueries(kanbansKey)
+        // },
         onError(err: Error, param: any, preDate: any) {
             queryClient.setQueryData(kanbansKey, preDate)
         }
