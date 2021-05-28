@@ -4,6 +4,7 @@ import {ReactComponent as Logo} from "assets/logo.svg"
 import { Dropdown, Menu } from "antd"
 import { logout, useUser, useUsers } from "tools/user"
 import XHeadUsers from "./head-users"
+import XHeadProject from "./head-projects"
 
 const XHeader:FC = () => {
 
@@ -20,15 +21,9 @@ const XHeader:FC = () => {
 
     return <Content>
         <div onClick={toHome} ><Logo/></div>
-
-        <Dropdown overlay={UserMenu} placement="bottomCenter" arrow >
-            <span>项目</span>
-        </Dropdown>
-
+        <XHeadProject />
         <XHeadUsers />
-
         <div></div>
-
         <Dropdown overlay={UserMenu} placement="bottomCenter" arrow >
             <span>Hi, {userInfo?.name}</span>
         </Dropdown>
