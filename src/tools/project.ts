@@ -1,6 +1,6 @@
 import { useDebounce } from "hooks/use-debounce"
 import { useUrlParams } from "hooks/use-params"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useMutation, useQuery } from "react-query"
 import { API } from "./api"
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./list-config"
@@ -25,10 +25,8 @@ export function useProjectsParam() {
         personId: Number(params.personId) || undefined
     }), [params])
     
-    const debounceParam = useDebounce(newParam)
-
     return {
-        params: debounceParam,
+        params: newParam,
         setParams
     }
 }
@@ -38,15 +36,14 @@ export function useProjectsParam() {
 export const useProjects = () => {
     const http = useHttp()
     const { params } = useProjectsParam()
+    const data = useDebounce(params)
 
     async function getProjects() {
-        const res = await http(API.projects, {
-            data: params
-        })
+        const res = await http(API.projects, { data })
         return res
     }
 
-    return useQuery<IProject[]>([queryKey.projects, params], getProjects)
+    return useQuery<IProject[]>([queryKey.projects, data], getProjects)
 }
 /**
  * 获取项目详情

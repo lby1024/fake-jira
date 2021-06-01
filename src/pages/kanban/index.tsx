@@ -11,6 +11,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import XDrop from "components/drop";
 import XDrag from "components/drag";
 import { getTypeTask, useReorderTask } from "./utils-task";
+import { Typography } from "antd";
 
 const XKanban:FC = () => {
 
@@ -61,6 +62,7 @@ const XKanban:FC = () => {
     return <Content>
         <h1 className="title">{project?.name}看板</h1>
         <XSearchTask />
+        <Typography.Text type="secondary" >长按拖拽</Typography.Text>
         {
             loading 
             ? <XLoading className="loading" /> 

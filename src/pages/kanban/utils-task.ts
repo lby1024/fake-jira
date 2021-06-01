@@ -23,8 +23,6 @@ export function useTasksParam() {
         }
     }, [params, projectId])
 
-    const debounceParam = useDebounce(data)
-
     function reset() {
         setParams({
             name: undefined,
@@ -35,7 +33,7 @@ export function useTasksParam() {
     }
 
     return {
-        params: debounceParam,
+        params: data,
         setParams,
         reset,
     }
@@ -43,10 +41,11 @@ export function useTasksParam() {
 
 export function useTasksKey() {
     const {params} = useTasksParam()
+    const p = useDebounce(params)
 
     const key = useMemo(() => {
         return [queryKey.tasks, cleanObj(params)]
-    }, [params])
+    }, [p])
 
     return key
 }

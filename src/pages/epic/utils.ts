@@ -17,15 +17,15 @@ export function useEpics() {
     const http = useHttp()
     const projectId = useProjectIdInUrl()
     const param = {projectId}
-    return useQuery([queryKey.epics, param], async () => {
+    return useQuery<IEpic[]>([queryKey.epics, param], async () => {
         return await http(API.epics, {data: param})
     })
 }
 
 export function useAddEpic() {
     const http = useHttp()
-    const projectIcd = useProjectIdInUrl()
-    const param = {projectIcd}
+    const projectId = useProjectIdInUrl()
+    const param = {projectId}
     const key = [queryKey.epics, param]
     async function addEpic(param: Partial<IEpic>) {
         return await http(API.epics, {
@@ -38,8 +38,8 @@ export function useAddEpic() {
 
 export function useDeleteEpic() {
     const http = useHttp()
-    const projectIcd = useProjectIdInUrl()
-    const param = {projectIcd}
+    const projectId = useProjectIdInUrl()
+    const param = {projectId}
     const key = [queryKey.epics, param]
     async function deleteEpic(param: Partial<IEpic>) {
         return await http(`${API.epics}/${param.id}`, {

@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import XProjectForm from 'components/project-form';
 import XTaskForm from 'components/task-form';
+import XEpicForm from 'pages/epic/epic-form';
 
 const Content: FC = ({children}) => {
   return <QueryClientProvider client={new QueryClient()} >
@@ -16,6 +17,7 @@ const Content: FC = ({children}) => {
       {children}
       <XProjectForm />
       <XTaskForm />
+      <XEpicForm />
     </BrowserRouter>
   </QueryClientProvider>
 }

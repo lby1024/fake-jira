@@ -44,8 +44,11 @@ function editList(list: any[], newItem: any) {
 }
 
 function addList(list: any[], item: any) {
+    list = list || []
     const newItem = {...item}
     newItem.id = newItem.id || +new Date()
+    console.log([...list, newItem], '--- kkk');
+    
     return [...list, newItem]
 }
 
