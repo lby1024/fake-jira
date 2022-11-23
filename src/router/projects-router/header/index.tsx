@@ -1,48 +1,54 @@
-import styled from "@emotion/styled"
-import { FC } from "react"
-import {ReactComponent as Logo} from "assets/logo.svg"
-import { Dropdown, Menu } from "antd"
-import { logout, useUser, useUsers } from "tools/user"
-import XHeadUsers from "./head-users"
-import XHeadProject from "./head-projects"
+import styled from "@emotion/styled";
+import { FC } from "react";
+import { ReactComponent as Logo } from "assets/logo.svg";
+import { Dropdown, Menu } from "antd";
+import { logout, useUser } from "tools/user";
+import XHeadUsers from "./head-users";
+import XHeadProject from "./head-projects";
 
-const XHeader:FC = () => {
+const XHeader: FC = () => {
+  const { data: userInfo } = useUser();
 
-    const {data: userInfo} = useUser()
-    const {data: users} = useUsers()
+  function toHome() {
+    window.location.pathname = "";
+  }
 
-    function toHome() {
-        window.location.pathname = ""
-    }
-
-    const UserMenu = <Menu style={{textAlign: "center"}} >
-        <Menu.Item key="logout" onClick={logout} >登出</Menu.Item>
+  const UserMenu = (
+    <Menu style={{ textAlign: "center" }}>
+      <Menu.Item key="logout" onClick={logout}>
+        登出
+      </Menu.Item>
     </Menu>
+  );
 
-    return <Content>
-        <div onClick={toHome} ><Logo/></div>
-        <XHeadProject />
-        <XHeadUsers />
-        <div></div>
-        <Dropdown overlay={UserMenu} placement="bottomCenter" arrow >
-            <span>Hi, {userInfo?.name}</span>
-        </Dropdown>
+  return (
+    <Content>
+      <div onClick={toHome}>
+        <Logo />
+      </div>
+      <XHeadProject />
+      <XHeadUsers />
+      <div></div>
+      <Dropdown overlay={UserMenu} placement="bottomCenter" arrow>
+        <span>Hi, {userInfo?.name}</span>
+      </Dropdown>
     </Content>
-}
+  );
+};
 
-export default XHeader
+export default XHeader;
 
 const Content = styled.div`
-    padding: 0 3.5rem;
-    height: 6rem;
-    background-color: #fff;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 8rem 100px 100px 1fr 100px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) inset;
-    > * {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-`
+  padding: 0 3.5rem;
+  height: 6rem;
+  background-color: #fff;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 8rem 100px 100px 1fr 100px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) inset;
+  > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
