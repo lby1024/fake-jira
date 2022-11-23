@@ -1,31 +1,33 @@
-import React, { FC } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { FC } from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { DevTools, loadServer } from "jira-dev-tool";
-import 'antd/dist/antd.less';
-import './index.css';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
-import XProjectForm from 'components/project-form';
-import XTaskForm from 'components/task-form';
-import XEpicForm from 'pages/epic/epic-form';
+import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
+import XProjectForm from "components/project-form";
+import XTaskForm from "components/task-form";
+import XEpicForm from "pages/epic/epic-form";
+import "antd/dist/antd.less";
+import "./index.css";
 
-const Content: FC = ({children}) => {
-  return <QueryClientProvider client={new QueryClient()} >
-    <BrowserRouter>
-      {children}
-      <XProjectForm />
-      <XTaskForm />
-      <XEpicForm />
-    </BrowserRouter>
-  </QueryClientProvider>
-}
+const Content: FC = ({ children }) => {
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <BrowserRouter>
+        {children}
+        <DevTools />
+        <XProjectForm />
+        <XTaskForm />
+        <XEpicForm />
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
 
 loadServer(() =>
   ReactDOM.render(
     <Content>
-      <DevTools />
       <App />
     </Content>,
     document.getElementById("root")
