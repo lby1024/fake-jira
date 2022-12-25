@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Card, Divider, Typography } from "antd";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import XLogin from "./login";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
@@ -11,32 +11,34 @@ const PUnlogin: FC = () => {
   const [isRegist, setIsRegist] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const footerInfo = useMemo(() => {
-    return isRegist ? "已经有账号了?直接登录" : "没有账号?注册新账号";
-  }, [isRegist]);
+  const Title = <h2 className="title">{isRegist ? "注册" : "登录"}</h2>;
 
-  const title = useMemo(() => {
-    return isRegist ? "注册" : "登录";
-  }, [isRegist]);
+  const Error = (
+    <Typography.Text type="danger">{error?.message}</Typography.Text>
+  );
+
+  const LoginOrRegist = isRegist ? (
+    <XRegist onError={setError} />
+  ) : (
+    <XLogin onError={setError} />
+  );
+
+  const Link = (
+    <a onClick={() => setIsRegist(!isRegist)} href="/#">
+      {isRegist ? "已经有账号了?直接登录" : "没有账号?注册新账号"}
+    </a>
+  );
 
   return (
     <Content>
       <div className="header" />
       <div className="bg" />
       <Card className="card">
-        {<h2 className="title">{title}</h2>}
-        {error && (
-          <Typography.Text type="danger">{error.message}</Typography.Text>
-        )}
-        {isRegist ? (
-          <XRegist onError={setError} />
-        ) : (
-          <XLogin onError={setError} />
-        )}
+        {Title}
+        {error && Error}
+        {LoginOrRegist}
         <Divider />
-        <a onClick={() => setIsRegist(!isRegist)} href="/#">
-          {footerInfo}
-        </a>
+        {Link}
       </Card>
     </Content>
   );
