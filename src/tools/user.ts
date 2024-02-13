@@ -58,7 +58,7 @@ export function useRegist() {
 export function useLogin() {
   const client = useQueryClient();
   return useMutation(login, {
-    onSuccess: () => client.invalidateQueries(queryKey.userInfo),
+    onSuccess: () => client.invalidateQueries(queryKey.userInfo), // 登录成功后跟新用户信息
   });
 }
 
